@@ -1,7 +1,6 @@
 name: Build Unsigned iOS IPA
 
-on:
-  workflow_dispatch: # Allows you to manually trigger the build from GitHub
+on: workflow_dispatch
 
 jobs:
   build_ios:
@@ -15,21 +14,28 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Setup Shorebird
+        uses: shorebirdtech/setup-shorebird@v1
+
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build iOS (No Codesign)
-        run: flutter build ios --release --no-codesign
-
-      - name: Package IPA
+      - name: Build iOS Release via Shorebird
         run: |
-          cd build/ios/iphoneos
+          # We use --export-method=ad-hoc or simply let it build an xcarchive
+          shorebird release ios --no-codesign
+        env:
+          SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
+
+      - name: Package IPA from XCArchive
+        run: |
+          cd build/ios/archive/Runner.xcarchive/Products/Applications
           mkdir Payload
           cp -r Runner.app Payload/
-          zip -r -y SpydexUnsigned.ipa Payload/
-          
+          zip -r -y ../../../../../SpydexUnsigned.ipa Payload/
+
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Spydex-iOS-App
-          path: build/ios/iphoneos/SpydexUnsigned.ipa
+          path: build/ios/SpydexUnsigned.ipa

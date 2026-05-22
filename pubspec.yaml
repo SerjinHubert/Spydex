@@ -35,4 +35,6 @@ flutter_launcher_icons:
   adaptive_icon_foreground: "assets/icon_zoomed.png"
 
 flutter:
+  assets:
+    - shorebird.yaml
   uses-material-design: true
