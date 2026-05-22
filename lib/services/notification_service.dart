@@ -28,7 +28,7 @@ class NotificationService {
     );
     
     await _notificationsPlugin.initialize(
-      initSettings,
+      settings: initSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) async {
         // Handle notification tap if needed
       },
@@ -89,11 +89,11 @@ class NotificationService {
 
   static Future<void> _scheduleDaily({required int id, required String title, required String body, required int hour, required int minute}) async {
     await _notificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      _nextInstanceOfTime(hour, minute),
-      const NotificationDetails(
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: _nextInstanceOfTime(hour, minute),
+      notificationDetails: const NotificationDetails(
         android: AndroidNotificationDetails(
           'spydex_daily',
           'Daily Reminders',
@@ -107,7 +107,6 @@ class NotificationService {
           presentSound: true,
         ),
       ),
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time, // This makes it repeat daily
     );
@@ -115,11 +114,11 @@ class NotificationService {
 
   static Future<void> _scheduleWeekly({required int id, required String title, required String body, required int day, required int hour, required int minute}) async {
     await _notificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      _nextInstanceOfWeekdayTime(day, hour, minute),
-      const NotificationDetails(
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: _nextInstanceOfWeekdayTime(day, hour, minute),
+      notificationDetails: const NotificationDetails(
         android: AndroidNotificationDetails(
           'spydex_weekly',
           'Weekly Review',
@@ -133,7 +132,6 @@ class NotificationService {
           presentSound: true,
         ),
       ),
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime, // This makes it repeat weekly
     );
