@@ -183,7 +183,7 @@ class _LockScreenState extends State<LockScreen> with SingleTickerProviderStateM
         height: btnHeight,
         decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)),
         child: Center(
-            child: Text(number.toString(), style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500))),
+            child: Text(number.toString(), style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w500))),
       ),
     );
   }
@@ -209,7 +209,7 @@ class _LockScreenState extends State<LockScreen> with SingleTickerProviderStateM
                   const Spacer(flex: 2),
                   Text("SPYDEX", style: TextStyle(color: Colors.amber, fontSize: titleSize, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
                   const SizedBox(height: 6),
-                  const Text("Focus. Discipline. Trade.", style: TextStyle(color: Colors.amber, fontSize: 13, letterSpacing: -0.2, fontWeight: FontWeight.w400)),
+                  const Text("Focus. Discipline. Trade.", style: TextStyle(color: Colors.amber, fontSize: 11, letterSpacing: -0.2, fontWeight: FontWeight.w400)),
                   const Spacer(flex: 3),
                   Container(
                     height: avatarSize,
@@ -228,9 +228,9 @@ class _LockScreenState extends State<LockScreen> with SingleTickerProviderStateM
                     child: profileImagePath == null ? const Icon(Icons.person, color: Colors.amber, size: 40) : null,
                   ),
                   const Spacer(flex: 2),
-                  const Text("Welcome Trader", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
+                  const Text("Welcome Trader", style: TextStyle(color: Colors.amber, fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                   const SizedBox(height: 8),
-                  const Text("Enter Passcode", style: TextStyle(color: Colors.grey, fontSize: 16)),
+                  const Text("Enter Passcode", style: TextStyle(color: Colors.grey, fontSize: 14)),
                   const Spacer(flex: 3),
             AnimatedBuilder(
               animation: _shakeAnimation,
@@ -262,7 +262,7 @@ class _LockScreenState extends State<LockScreen> with SingleTickerProviderStateM
             ),
                   if (isError) ...[
                     const Spacer(),
-                    const Text("Wrong passcode. Try again.", style: TextStyle(color: Color(0xFFFF5252), fontSize: 13, fontWeight: FontWeight.w500)),
+                    const Text("Wrong passcode. Try again.", style: TextStyle(color: Color(0xFFFF5252), fontSize: 11, fontWeight: FontWeight.w500)),
                     const Spacer(),
                   ] else ...[
                     const Spacer(flex: 2),
@@ -500,7 +500,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                    Row(
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
-                       const Text("Select Stock", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500)),
+                       const Text("Select Stock", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
                        GestureDetector(onTap: () => Navigator.pop(context), child: const Icon(Icons.close, color: Colors.white54, size: 20))
                      ],
                    ),
@@ -514,7 +514,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                          bool isSelected = (currentFilter == FilterType.stock && selectedStockFilter == s);
                          return ListTile(
                            contentPadding: const EdgeInsets.symmetric(vertical: 4),
-                           title: Text(s, style: TextStyle(color: isSelected ? Colors.amber : Colors.white, fontSize: 16, fontWeight: isSelected ? FontWeight.w500 : FontWeight.w500)),
+                           title: Text(s, style: TextStyle(color: isSelected ? Colors.amber : Colors.white, fontSize: 14, fontWeight: isSelected ? FontWeight.w500 : FontWeight.w500)),
                            trailing: isSelected ? const Icon(Icons.check_circle, color: Colors.amber, size: 20) : null,
                            onTap: () {
                                setState(() { currentFilter = FilterType.stock; selectedStockFilter = s; });
@@ -550,7 +550,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Select Month & Year", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500)),
+                  const Text("Select Month & Year", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
                   const SizedBox(height: 24),
                   Row(
                     children: [
@@ -597,7 +597,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         setState(() { selectedMonth = tempMonth; selectedYear = tempYear; currentFilter = FilterType.month; });
                         Navigator.pop(context);
                       },
-                      child: const Text("Apply Filter", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
+                      child: const Text("Apply Filter", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14)),
                     ),
                   ),
                 ],
@@ -665,12 +665,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Equity Curve", style: TextStyle(color: Colors.grey, fontSize: 13)),
-              Text("${cumulative >= 0 ? "" : "-"}₹${cumulative.abs().toStringAsFixed(2)}", style: TextStyle(color: cumulative >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontWeight: FontWeight.w500, fontSize: 14)),
+              const Text("Equity Curve", style: TextStyle(color: Colors.grey, fontSize: 11)),
+              Text("${cumulative >= 0 ? "" : "-"}₹${cumulative.abs().toStringAsFixed(2)}", style: TextStyle(color: cumulative >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontWeight: FontWeight.w500, fontSize: 12)),
             ],
           ),
           const SizedBox(height: 4),
-          const Text("Cumulative net P&L over time", style: TextStyle(color: Colors.grey, fontSize: 11)),
+          const Text("Cumulative net P&L over time", style: TextStyle(color: Colors.grey, fontSize: 9)),
           const SizedBox(height: 24),
           SizedBox(
             height: 260,
@@ -688,7 +688,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       getTitlesWidget: (value, meta) {
                         int i = value.toInt();
                         if (i >= dates.length || i < 0) return const SizedBox();
-                        return Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("${dates[i].month.toString().padLeft(2, '0')}-${dates[i].day.toString().padLeft(2, '0')}", style: const TextStyle(color: Colors.grey, fontSize: 10)));
+                        return Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("${dates[i].month.toString().padLeft(2, '0')}-${dates[i].day.toString().padLeft(2, '0')}", style: const TextStyle(color: Colors.grey, fontSize: 8)));
                       },
                     ),
                   ),
@@ -772,8 +772,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
-                    Text("Weekday P&L", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
-                    SizedBox(height: 4), Text("The analysis based on the filtered trades", style: TextStyle(color: Colors.grey, fontSize: 12)),
+                    Text("Weekday P&L", style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
+                    SizedBox(height: 4), Text("The analysis based on the filtered trades", style: TextStyle(color: Colors.grey, fontSize: 10)),
                   ],
                 ),
               ),
@@ -781,7 +781,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(color: bestDay != 0 ? Colors.greenAccent.withOpacity(0.1) : const Color(0xFFFF5252).withOpacity(0.1), borderRadius: BorderRadius.circular(20), border: Border.all(color: bestDay != 0 ? Colors.greenAccent : const Color(0xFFFF5252))),
-                child: Text(bestDay != 0 ? "Best: ${shortDays[bestDay]} (${maxProfit.toStringAsFixed(1)})" : "No Best Trades", style: TextStyle(color: bestDay != 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontWeight: FontWeight.w500, fontSize: 12)),
+                child: Text(bestDay != 0 ? "Best: ${shortDays[bestDay]} (${maxProfit.toStringAsFixed(1)})" : "No Best Trades", style: TextStyle(color: bestDay != 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontWeight: FontWeight.w500, fontSize: 10)),
               )
             ],
           ),
@@ -790,7 +790,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(onTap: () => setState(() => weekOffset--), child: Container(padding: const EdgeInsets.all(4), color: Colors.transparent, child: const Icon(Icons.arrow_back_ios, color: Colors.grey, size: 16))),
-              Text(dateRange, style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.w500, fontSize: 13)),
+              Text(dateRange, style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.w500, fontSize: 11)),
               GestureDetector(onTap: () => setState(() => weekOffset++), child: Container(padding: const EdgeInsets.all(4), color: Colors.transparent, child: const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16))),
             ],
           ),
@@ -811,11 +811,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(val == 0 ? "0.0" : val.toStringAsFixed(1), style: TextStyle(color: val == 0 ? Colors.grey : c, fontSize: 10, fontWeight: FontWeight.w500)),
+                  Text(val == 0 ? "0.0" : val.toStringAsFixed(1), style: TextStyle(color: val == 0 ? Colors.grey : c, fontSize: 8, fontWeight: FontWeight.w500)),
                   const SizedBox(height: 6),
                   Container(width: 24, height: h > 0 ? h : 4, decoration: BoxDecoration(color: c, borderRadius: BorderRadius.circular(6))),
                   const SizedBox(height: 8),
-                  Text(shortDays[day], style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500)),
+                  Text(shortDays[day], style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w500)),
                 ],
               );
             }),
@@ -829,7 +829,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(color: active ? Colors.transparent : const Color(0xFF222222), borderRadius: BorderRadius.circular(24), border: Border.all(color: active ? Colors.amber.withOpacity(0.6) : Colors.transparent, width: 1)),
-      child: Center(child: Text(text, style: TextStyle(color: active ? Colors.amber : Colors.grey, fontWeight: active ? FontWeight.w500 : FontWeight.normal, fontSize: 14))),
+      child: Center(child: Text(text, style: TextStyle(color: active ? Colors.amber : Colors.grey, fontWeight: active ? FontWeight.w500 : FontWeight.normal, fontSize: 12))),
     );
   }
 
@@ -840,9 +840,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(color: Colors.grey, fontSize: 13)),
+          Text(title, style: const TextStyle(color: Colors.grey, fontSize: 11)),
           const SizedBox(height: 16),
-          Text(value, style: TextStyle(color: color, fontSize: 26, fontWeight: FontWeight.w500)),
+          Text(value, style: TextStyle(color: color, fontSize: 24, fontWeight: FontWeight.w500)),
         ],
       ),
     );
@@ -949,9 +949,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Capital Composition", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
+              const Text("Capital Composition", style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
               const SizedBox(height: 4),
-              const Text("True financial state of your margin", style: TextStyle(color: Colors.grey, fontSize: 12)),
+              const Text("True financial state of your margin", style: TextStyle(color: Colors.grey, fontSize: 10)),
               const SizedBox(height: 24),
               LayoutBuilder(
                 builder: (context, constraints) {
@@ -1059,11 +1059,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             Container(width: 10, height: 10, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
             const SizedBox(width: 8),
-            Expanded(child: Text(label, style: const TextStyle(color: Colors.grey, fontSize: 13), overflow: TextOverflow.ellipsis)),
+            Expanded(child: Text(label, style: const TextStyle(color: Colors.grey, fontSize: 11), overflow: TextOverflow.ellipsis)),
           ],
         ),
         const SizedBox(height: 4),
-        Text("${isNegative && value > 0 ? '-' : ''}₹${value.abs().toStringAsFixed(2)}", style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
+        Text("${isNegative && value > 0 ? '-' : ''}₹${value.abs().toStringAsFixed(2)}", style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
       ],
     );
   }
@@ -1101,10 +1101,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("SPYDEX", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
+                              const Text("SPYDEX", style: TextStyle(color: Colors.amber, fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                               GestureDetector(
                                 onTap: () => exportCSV(context),
-                                child: Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(border: Border.all(color: Colors.white24), borderRadius: BorderRadius.circular(20)), child: const Text("Export CSV", style: TextStyle(color: Colors.grey, fontSize: 12))),
+                                child: Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(border: Border.all(color: Colors.white24), borderRadius: BorderRadius.circular(20)), child: const Text("Export CSV", style: TextStyle(color: Colors.grey, fontSize: 10))),
                               )
                             ],
                           ),
@@ -1124,9 +1124,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)),
                             child: Column(
                               children: [
-                                const Text("Total Profit / Loss", style: TextStyle(color: Colors.grey, fontSize: 14)),
+                                const Text("Total Profit / Loss", style: TextStyle(color: Colors.grey, fontSize: 12)),
                                 const SizedBox(height: 12),
-                                Text("${totalProfit >= 0 ? "" : "-"}₹${totalProfit.abs().toStringAsFixed(2)}", style: TextStyle(color: totalProfit >= 0 ? const Color(0xFF4CAF50) : const Color(0xFFFF5252), fontSize: 48, fontWeight: FontWeight.w500, letterSpacing: -1)),
+                                Text("${totalProfit >= 0 ? "" : "-"}₹${totalProfit.abs().toStringAsFixed(2)}", style: TextStyle(color: totalProfit >= 0 ? const Color(0xFF4CAF50) : const Color(0xFFFF5252), fontSize: 46, fontWeight: FontWeight.w500, letterSpacing: -1)),
                               ],
                             ),
                           ),
@@ -1137,9 +1137,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           const SizedBox(height: 16),
                           Row(
                             children: [
-                              Expanded(child: Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Avg. P&L / Trade", style: TextStyle(color: Colors.grey, fontSize: 13)), const SizedBox(height: 16), FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: Text("${avgProfit >= 0 ? "" : "-"}₹${avgProfit.abs().toStringAsFixed(2)}", style: TextStyle(color: avgProfit >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontSize: 24, fontWeight: FontWeight.w500)))]))),
+                              Expanded(child: Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Avg. P&L / Trade", style: TextStyle(color: Colors.grey, fontSize: 11)), const SizedBox(height: 16), FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: Text("${avgProfit >= 0 ? "" : "-"}₹${avgProfit.abs().toStringAsFixed(2)}", style: TextStyle(color: avgProfit >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontSize: 22, fontWeight: FontWeight.w500)))]))),
                               const SizedBox(width: 16),
-                              Expanded(child: Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Total Tax", style: TextStyle(color: Colors.grey, fontSize: 13)), const SizedBox(height: 16), FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: Text("-₹${totalTax.abs().toStringAsFixed(2)}", style: const TextStyle(color: Color(0xFFFF5252), fontSize: 24, fontWeight: FontWeight.w500)))]))),
+                              Expanded(child: Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Total Tax", style: TextStyle(color: Colors.grey, fontSize: 11)), const SizedBox(height: 16), FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: Text("-₹${totalTax.abs().toStringAsFixed(2)}", style: const TextStyle(color: Color(0xFFFF5252), fontSize: 22, fontWeight: FontWeight.w500)))]))),
                             ],
                           ),
                           const SizedBox(height: 20),
@@ -1219,8 +1219,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(color: isBold ? Colors.white : Colors.grey, fontSize: 13, fontWeight: isBold ? FontWeight.w500 : FontWeight.normal)),
-          Text(value, style: TextStyle(color: valueColor, fontWeight: isBold ? FontWeight.w500 : FontWeight.w500, fontSize: 14)),
+          Text(label, style: TextStyle(color: isBold ? Colors.white : Colors.grey, fontSize: 11, fontWeight: isBold ? FontWeight.w500 : FontWeight.normal)),
+          Text(value, style: TextStyle(color: valueColor, fontWeight: isBold ? FontWeight.w500 : FontWeight.w500, fontSize: 12)),
         ],
       ),
     );
@@ -1264,13 +1264,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 16),
-                          const Text("Calendar", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
+                          const Text("Calendar", style: TextStyle(color: Colors.amber, fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                           const SizedBox(height: 24),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GestureDetector(onTap: prevMonth, child: Container(width: 36, height: 36, decoration: const BoxDecoration(shape: BoxShape.circle, color: Color(0xFF161616)), child: const Center(child: Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 14)))),
-                              Text(DateFormat("MMMM yyyy").format(currentMonth), style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
+                              Text(DateFormat("MMMM yyyy").format(currentMonth), style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
                               GestureDetector(onTap: nextMonth, child: Container(width: 36, height: 36, decoration: const BoxDecoration(shape: BoxShape.circle, color: Color(0xFF161616)), child: const Center(child: Icon(Icons.arrow_forward_ios, color: Colors.white, size: 14)))),
                             ],
                           ),
@@ -1286,7 +1286,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                 itemBuilder: (context, index) {
                                   if (index < 7) {
                                     List<String> headers = ["S", "M", "T", "W", "T", "F", "S"];
-                                    return Container(color: const Color(0xFF121212), alignment: Alignment.center, child: Text(headers[index], style: const TextStyle(color: Colors.grey, fontSize: 12)));
+                                    return Container(color: const Color(0xFF121212), alignment: Alignment.center, child: Text(headers[index], style: const TextStyle(color: Colors.grey, fontSize: 10)));
                                   }
                                   int dayIndex = index - 7;
                                   if (dayIndex < emptyCells) return Container(color: const Color(0xFF161616));
@@ -1309,14 +1309,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                          child: Column(
                                            mainAxisAlignment: MainAxisAlignment.center,
                                            children: [
-                                             Text("$day", style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                                             Text("$day", style: const TextStyle(color: Colors.white70, fontSize: 10)),
                                              if (profit != null) const SizedBox(height: 4),
                                              if (profit != null)
                                                Padding(
                                                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
                                                  child: FittedBox(
                                                    fit: BoxFit.scaleDown,
-                                                   child: Text("${profit >= 0 ? "+" : "-"}₹${profit.abs().toStringAsFixed(2)}", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: profit >= 0 ? Colors.greenAccent : const Color(0xFFFF5252))),
+                                                   child: Text("${profit >= 0 ? "+" : "-"}₹${profit.abs().toStringAsFixed(2)}", style: TextStyle(fontSize: 8, fontWeight: FontWeight.w500, color: profit >= 0 ? Colors.greenAccent : const Color(0xFFFF5252))),
                                                  ),
                                                ),
                                            ],
@@ -1332,8 +1332,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.radio_button_unchecked, color: const Color(0xFF183321).withOpacity(0.8), size: 18), const SizedBox(width: 6), const Text("Profit day", style: TextStyle(color: Colors.grey, fontSize: 13)), const SizedBox(width: 24),
-                              Icon(Icons.radio_button_unchecked, color: const Color(0xFF3B1E1E).withOpacity(0.8), size: 18), const SizedBox(width: 6), const Text("Loss day", style: TextStyle(color: Colors.grey, fontSize: 13)),
+                              Icon(Icons.radio_button_unchecked, color: const Color(0xFF183321).withOpacity(0.8), size: 18), const SizedBox(width: 6), const Text("Profit day", style: TextStyle(color: Colors.grey, fontSize: 11)), const SizedBox(width: 24),
+                              Icon(Icons.radio_button_unchecked, color: const Color(0xFF3B1E1E).withOpacity(0.8), size: 18), const SizedBox(width: 6), const Text("Loss day", style: TextStyle(color: Colors.grey, fontSize: 11)),
                             ],
                           ),
                           const SizedBox(height: 32),
@@ -1353,7 +1353,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                          children: [
-                                           Text(DateFormat("EEEE, d MMMM yyyy").format(selectedDate!), style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.w500, fontSize: 16)),
+                                           Text(DateFormat("EEEE, d MMMM yyyy").format(selectedDate!), style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.w500, fontSize: 14)),
                                            GestureDetector(onTap: () => setState(()=>selectedDate=null), child: const Icon(Icons.close, color: Colors.grey, size: 18)),
                                          ]
                                        ),
@@ -1370,15 +1370,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                      Row(
                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                        children: [
-                                         Text(DateFormat("EEEE, d MMMM yyyy").format(selectedDate!), style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.w500, fontSize: 16)),
+                                         Text(DateFormat("EEEE, d MMMM yyyy").format(selectedDate!), style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.w500, fontSize: 14)),
                                          GestureDetector(onTap: () => setState(()=>selectedDate=null), child: const Icon(Icons.close, color: Colors.grey, size: 18)),
                                        ]
                                      ),
                                      const SizedBox(height: 4),
                                      Row(
                                        children: [
-                                         Text("${dayTrades.length} trade${dayTrades.length > 1 ? 's' : ''} · ", style: const TextStyle(color: Colors.grey, fontSize: 13)),
-                                         Text("Day Net: ${dayNet >= 0 ? '+' : '-'}₹${dayNet.abs().toStringAsFixed(2)}", style: TextStyle(color: dayNet >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontSize: 13, fontWeight: FontWeight.w500)),
+                                         Text("${dayTrades.length} trade${dayTrades.length > 1 ? 's' : ''} · ", style: const TextStyle(color: Colors.grey, fontSize: 11)),
+                                         Text("Day Net: ${dayNet >= 0 ? '+' : '-'}₹${dayNet.abs().toStringAsFixed(2)}", style: TextStyle(color: dayNet >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontSize: 11, fontWeight: FontWeight.w500)),
                                        ]
                                      ),
                                      const SizedBox(height: 16),
@@ -1399,7 +1399,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                  children: [
                                                    Row(children: [Icon(isProfit ? Icons.trending_up : Icons.trending_down, color: themeColor, size: 18), const SizedBox(width: 8), Text("Trade #$index", style: const TextStyle(color: Colors.grey))]),
-                                                   Text("${isProfit ? '+' : '-'}₹${gross.abs().toStringAsFixed(2)}", style: TextStyle(color: themeColor, fontWeight: FontWeight.w500, fontSize: 16)),
+                                                   Text("${isProfit ? '+' : '-'}₹${gross.abs().toStringAsFixed(2)}", style: TextStyle(color: themeColor, fontWeight: FontWeight.w500, fontSize: 14)),
                                                  ],
                                                ),
                                                const SizedBox(height: 16),
@@ -1420,7 +1420,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               const Text("Day's Tax Applied", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500)),
-                                              Text("-₹${taxAmount.toStringAsFixed(2)}", style: const TextStyle(color: Color(0xFFFF5252), fontWeight: FontWeight.w500, fontSize: 16)),
+                                              Text("-₹${taxAmount.toStringAsFixed(2)}", style: const TextStyle(color: Color(0xFFFF5252), fontWeight: FontWeight.w500, fontSize: 14)),
                                             ]
                                           )
                                         ),
@@ -1472,7 +1472,7 @@ class CalloutPainter extends CustomPainter {
     Path path = Path();
     
     TextPainter textPainter = TextPainter(
-      text: TextSpan(text: text, style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500)),
+      text: TextSpan(text: text, style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w500)),
       textDirection: ui.TextDirection.ltr,
     )..layout();
 
@@ -1831,7 +1831,7 @@ class _EntryScreenState extends State<EntryScreen> {
                 children: const [
                   Icon(Icons.check_circle, color: Colors.greenAccent, size: 80),
                   SizedBox(height: 20),
-                  Text("Saved!", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
+                  Text("Saved!", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                 ],
               ),
             ),
@@ -1947,7 +1947,7 @@ class _EntryScreenState extends State<EntryScreen> {
   }
 
   Widget label(String text) {
-    return Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(text, style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500, letterSpacing: -0.3)));
+    return Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(text, style: const TextStyle(color: Colors.grey, fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: -0.3)));
   }
 
   Widget inputField(TextEditingController controller, {Function? onChanged, String? hintText}) {
@@ -1958,8 +1958,8 @@ class _EntryScreenState extends State<EntryScreen> {
         child: TextField(
           controller: controller,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
-          decoration: InputDecoration(hintText: hintText, hintStyle: const TextStyle(color: Colors.white38, fontSize: 16), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero),
+          style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+          decoration: InputDecoration(hintText: hintText, hintStyle: const TextStyle(color: Colors.white38, fontSize: 14), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero),
           onChanged: (val) { if (onChanged != null) onChanged(); },
         ),
       ),
@@ -1987,7 +1987,7 @@ class _EntryScreenState extends State<EntryScreen> {
         child: Column(
           children: [
             const SizedBox(height: 16),
-            const Align(alignment: Alignment.centerLeft, child: Text("Add Entry", style: TextStyle(color: Colors.amber, fontSize: 26, fontWeight: FontWeight.w500, letterSpacing: -0.2))),
+            const Align(alignment: Alignment.centerLeft, child: Text("Add Entry", style: TextStyle(color: Colors.amber, fontSize: 24, fontWeight: FontWeight.w500, letterSpacing: -0.2))),
             const SizedBox(height: 24),
 
             // Toggle Bar
@@ -2001,7 +2001,7 @@ class _EntryScreenState extends State<EntryScreen> {
                       onTap: () => setState(() { isTradeEntry = true; _hasAttemptedSave = false; }),
                       child: Container(
                         decoration: BoxDecoration(color: isTradeEntry ? Colors.amber.withOpacity(0.15) : Colors.transparent, borderRadius: BorderRadius.circular(16), border: isTradeEntry ? Border.all(color: Colors.amber.withOpacity(0.5)) : null),
-                        child: Center(child: Text("Trade Entry", style: TextStyle(color: isTradeEntry ? Colors.amber : Colors.grey, fontSize: 16, fontWeight: isTradeEntry ? FontWeight.w500 : FontWeight.w500))),
+                        child: Center(child: Text("Trade Entry", style: TextStyle(color: isTradeEntry ? Colors.amber : Colors.grey, fontSize: 14, fontWeight: isTradeEntry ? FontWeight.w500 : FontWeight.w500))),
                       ),
                     ),
                   ),
@@ -2010,7 +2010,7 @@ class _EntryScreenState extends State<EntryScreen> {
                       onTap: () => setState(() { isTradeEntry = false; _hasAttemptedSave = false; }),
                       child: Container(
                         decoration: BoxDecoration(color: !isTradeEntry ? Colors.amber.withOpacity(0.15) : Colors.transparent, borderRadius: BorderRadius.circular(16), border: !isTradeEntry ? Border.all(color: Colors.amber.withOpacity(0.5)) : null),
-                        child: Center(child: Text("Tax Entry", style: TextStyle(color: !isTradeEntry ? Colors.amber : Colors.grey, fontSize: 16, fontWeight: !isTradeEntry ? FontWeight.w500 : FontWeight.w500))),
+                        child: Center(child: Text("Tax Entry", style: TextStyle(color: !isTradeEntry ? Colors.amber : Colors.grey, fontSize: 14, fontWeight: !isTradeEntry ? FontWeight.w500 : FontWeight.w500))),
                       ),
                     ),
                   ),
@@ -2044,9 +2044,9 @@ class _EntryScreenState extends State<EntryScreen> {
                     children: [
                       Icon(Icons.cloud_upload_rounded, color: Colors.amber.withOpacity(0.8), size: 48),
                       const SizedBox(height: 16),
-                      const Text("Browse Files to upload", style: TextStyle(color: Colors.white70, fontSize: 16, fontWeight: FontWeight.w500)),
+                      const Text("Browse Files to upload", style: TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.w500)),
                       const SizedBox(height: 6),
-                      const Text("Supported formats: CSV, Excel", style: TextStyle(color: Colors.white38, fontSize: 13)),
+                      const Text("Supported formats: CSV, Excel", style: TextStyle(color: Colors.white38, fontSize: 11)),
                     ],
                   ),
                 ),
@@ -2063,7 +2063,7 @@ class _EntryScreenState extends State<EntryScreen> {
                     children: [
                       const Icon(Icons.description, color: Colors.blueAccent, size: 28),
                       const SizedBox(width: 12),
-                      Expanded(child: Text(uploadedFileName! + (pendingTrades.isNotEmpty ? ' (${pendingTrades.length} pending)' : ''), style: const TextStyle(color: Colors.white, fontSize: 15))),
+                      Expanded(child: Text(uploadedFileName! + (pendingTrades.isNotEmpty ? ' (${pendingTrades.length} pending)' : ''), style: const TextStyle(color: Colors.white, fontSize: 13))),
                       GestureDetector(
                         onTap: () {
                           setState(() { uploadedFileName = null; pendingTrades.clear(); });
@@ -2083,7 +2083,7 @@ class _EntryScreenState extends State<EntryScreen> {
                       height: 56, padding: const EdgeInsets.symmetric(horizontal: 16),
                       decoration: BoxDecoration(color: const Color(0xFF222222), borderRadius: BorderRadius.circular(12)),
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                        Text(formatDate(selectedDate), style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500)),
+                        Text(formatDate(selectedDate), style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
                         const Icon(Icons.calendar_today_outlined, size: 20, color: Colors.grey),
                       ]),
                     ),
@@ -2095,7 +2095,7 @@ class _EntryScreenState extends State<EntryScreen> {
                       label("NAME OF THE STOCK"),
                       GestureDetector(
                         onTap: _addStock,
-                        child: Row(children: const [Icon(Icons.add, color: Colors.amber, size: 18), SizedBox(width: 4), Text("Add a Stock", style: TextStyle(color: Colors.amber, fontSize: 13, fontWeight: FontWeight.w500))]),
+                        child: Row(children: const [Icon(Icons.add, color: Colors.amber, size: 18), SizedBox(width: 4), Text("Add a Stock", style: TextStyle(color: Colors.amber, fontSize: 11, fontWeight: FontWeight.w500))]),
                       ),
                     ]),
                     const SizedBox(height: 8),
@@ -2120,8 +2120,8 @@ class _EntryScreenState extends State<EntryScreen> {
                                 alignment: Alignment.centerLeft,
                                 child: TextField(
                                   controller: controller, focusNode: focusNode, textAlignVertical: TextAlignVertical.center,
-                                  decoration: const InputDecoration(hintText: "Type or Select a Stock", hintStyle: TextStyle(color: Colors.grey, fontSize: 16, height: 1.2), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero, suffixIcon: Icon(Icons.search, color: Colors.grey, size: 22), suffixIconConstraints: BoxConstraints(minWidth: 28, minHeight: 28)),
-                                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+                                  decoration: const InputDecoration(hintText: "Type or Select a Stock", hintStyle: TextStyle(color: Colors.grey, fontSize: 14, height: 1.2), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero, suffixIcon: Icon(Icons.search, color: Colors.grey, size: 22), suffixIconConstraints: BoxConstraints(minWidth: 28, minHeight: 28)),
+                                  style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
                                   onChanged: (val) { selectedStock = val.trim().toUpperCase(); }
                                 ),
                               );
@@ -2137,7 +2137,7 @@ class _EntryScreenState extends State<EntryScreen> {
                                       padding: EdgeInsets.zero, shrinkWrap: true, itemCount: options.length,
                                       itemBuilder: (BuildContext context, int index) {
                                         final String option = options.elementAt(index);
-                                        return InkWell(onTap: () => onSelected(option), child: Padding(padding: const EdgeInsets.all(20.0), child: Text(option, style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500))));
+                                        return InkWell(onTap: () => onSelected(option), child: Padding(padding: const EdgeInsets.all(20.0), child: Text(option, style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500))));
                                       },
                                     ),
                                   ),
@@ -2194,7 +2194,7 @@ class _EntryScreenState extends State<EntryScreen> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("Day's Overview - ${formatDate(selectedDate)}", style: const TextStyle(color: Colors.grey, fontSize: 14, fontWeight: FontWeight.w500)),
+                                      Text("Day's Overview - ${formatDate(selectedDate)}", style: const TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w500)),
                                       const SizedBox(height: 16),
                                       summaryRow("Day's Gross P/L", dailyGross),
                                       const SizedBox(height: 12),
@@ -2229,9 +2229,9 @@ class _EntryScreenState extends State<EntryScreen> {
             ],
 
             if (isTradeEntry && showTradeWarning && _hasAttemptedSave && !_isSaving)
-              const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(bottom: 16), child: Text("Please fill in Buy Value, Sell Value, and Quantity.", style: TextStyle(color: Color(0xFFFF5252), fontSize: 14)))),
+              const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(bottom: 16), child: Text("Please fill in Buy Value, Sell Value, and Quantity.", style: TextStyle(color: Color(0xFFFF5252), fontSize: 12)))),
             if (!isTradeEntry && showTaxWarning && _hasAttemptedSave && !_isSaving)
-              const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(bottom: 16), child: Text("Please enter the Tax Value.", style: TextStyle(color: Color(0xFFFF5252), fontSize: 14)))),
+              const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(bottom: 16), child: Text("Please enter the Tax Value.", style: TextStyle(color: Color(0xFFFF5252), fontSize: 12)))),
 
             GestureDetector(
               onTap: () {
@@ -2243,7 +2243,7 @@ class _EntryScreenState extends State<EntryScreen> {
                 width: double.infinity, height: 65,
                 decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.amber.withOpacity(0.4), width: 2.0)),
                 child: Center(
-                  child: Text(_isSaving ? "Saving..." : (isTradeEntry ? "Save Trade" : "Save Tax"), style: TextStyle(color: _isSaving ? Colors.amber.withOpacity(0.5) : Colors.amber, fontSize: 18, fontWeight: FontWeight.w500)),
+                  child: Text(_isSaving ? "Saving..." : (isTradeEntry ? "Save Trade" : "Save Tax"), style: TextStyle(color: _isSaving ? Colors.amber.withOpacity(0.5) : Colors.amber, fontSize: 16, fontWeight: FontWeight.w500)),
                 ),
               ),
             ),
@@ -2276,9 +2276,9 @@ class HistoryScreen extends StatelessWidget {
                   children: [
                     const Text(
                       "Trade History",
-                      style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2),
+                      style: TextStyle(color: Colors.amber, fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: -0.2),
                     ),
-                    Text("$count trades", style: const TextStyle(color: Colors.grey, fontSize: 13)),
+                    Text("$count trades", style: const TextStyle(color: Colors.grey, fontSize: 11)),
                   ],
                 );
               },
@@ -2389,7 +2389,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                 children: [
                   const Icon(Icons.check_circle, color: Colors.greenAccent, size: 80),
                   const SizedBox(height: 20),
-                  Text(msg, style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
+                  Text(msg, style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                 ],
               ),
             ),
@@ -2435,7 +2435,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
+        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 8, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
         const SizedBox(height: 8),
         Container(
           height: 44,
@@ -2445,7 +2445,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
             child: TextField(
               controller: controller,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),
+              style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500),
               decoration: const InputDecoration(border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero),
               onChanged: (_) => _calculateTemp(),
             ),
@@ -2474,7 +2474,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                       children: const [
                         Icon(Icons.edit, size: 14, color: Colors.amber),
                         SizedBox(width: 8),
-                        Text("Editing Trade", style: TextStyle(color: Colors.amber, fontSize: 14, fontWeight: FontWeight.w500)),
+                        Text("Editing Trade", style: TextStyle(color: Colors.amber, fontSize: 12, fontWeight: FontWeight.w500)),
                       ]
                     ),
                     GestureDetector(
@@ -2484,7 +2484,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                  ]
               ),
               const SizedBox(height: 24),
-              const Text("DATE", style: TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
+              const Text("DATE", style: TextStyle(color: Colors.grey, fontSize: 8, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
               const SizedBox(height: 8),
               GestureDetector(
                 onTap: () async {
@@ -2501,14 +2501,14 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Text(formatDate(selectedDate), style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500)),
+                         Text(formatDate(selectedDate), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500)),
                          const Icon(Icons.calendar_today_outlined, size: 16, color: Colors.grey),
                       ]
                    )
                 )
               ),
               const SizedBox(height: 20),
-              const Text("STOCK", style: TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
+              const Text("STOCK", style: TextStyle(color: Colors.grey, fontSize: 8, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
               const SizedBox(height: 8),
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance.collection('stocks').orderBy('name').snapshots(),
@@ -2532,8 +2532,8 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                            alignment: Alignment.centerLeft,
                            child: TextField(
                              controller: controller, focusNode: focusNode, textAlignVertical: TextAlignVertical.center,
-                             decoration: const InputDecoration(hintText: "Type or Select Stock", hintStyle: TextStyle(color: Colors.grey, fontSize: 13, height: 1.2), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero, suffixIcon: Icon(Icons.search, color: Colors.grey, size: 16), suffixIconConstraints: BoxConstraints(minWidth: 20, minHeight: 20)),
-                             style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),
+                             decoration: const InputDecoration(hintText: "Type or Select Stock", hintStyle: TextStyle(color: Colors.grey, fontSize: 11, height: 1.2), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero, suffixIcon: Icon(Icons.search, color: Colors.grey, size: 16), suffixIconConstraints: BoxConstraints(minWidth: 20, minHeight: 20)),
+                             style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500),
                              onChanged: (val) { tempStock = val.trim().toUpperCase(); }
                            ),
                          );
@@ -2580,8 +2580,8 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
               Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
-                    const Text("Gross", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500)),
-                    Text("${tempGross >= 0 ? "+" : ""}₹${tempGross.abs().toStringAsFixed(2)}", style: TextStyle(color: tempGross >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontSize: 15, fontWeight: FontWeight.w500)),
+                    const Text("Gross", style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500)),
+                    Text("${tempGross >= 0 ? "+" : ""}₹${tempGross.abs().toStringAsFixed(2)}", style: TextStyle(color: tempGross >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontSize: 13, fontWeight: FontWeight.w500)),
                  ]
               ),
               const SizedBox(height: 20),
@@ -2592,7 +2592,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                     width: double.infinity,
                     decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.amber.withOpacity(0.5))),
                     child: Center(
-                       child: Text(isUpdating ? "Updating..." : "Update Trade", style: TextStyle(color: isUpdating ? Colors.amber.withOpacity(0.5) : Colors.amber, fontSize: 15, fontWeight: FontWeight.w500)),
+                       child: Text(isUpdating ? "Updating..." : "Update Trade", style: TextStyle(color: isUpdating ? Colors.amber.withOpacity(0.5) : Colors.amber, fontSize: 13, fontWeight: FontWeight.w500)),
                     )
                  )
               )
@@ -2628,25 +2628,25 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
              children: [
                 Row(
                   children: [
-                    Text(formatDate(date), style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
+                    Text(formatDate(date), style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)),
                     if (t['stock'] != null) ...[
                       const SizedBox(width: 8),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(color: Colors.amber.withOpacity(0.2), borderRadius: BorderRadius.circular(6)),
-                        child: Text(t['stock'], style: const TextStyle(color: Colors.amber, fontSize: 12, fontWeight: FontWeight.w500)),
+                        child: Text(t['stock'], style: const TextStyle(color: Colors.amber, fontSize: 10, fontWeight: FontWeight.w500)),
                       ),
                     ],
                   ]
                 ),
                 Text(
                   "${gross >= 0 ? "+" : ""}₹${gross.abs().toStringAsFixed(2)}",
-                  style: TextStyle(color: gross >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontSize: 16, fontWeight: FontWeight.w500),
+                  style: TextStyle(color: gross >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontSize: 14, fontWeight: FontWeight.w500),
                 ),
              ]
           ),
           const SizedBox(height: 6),
-          Text("₹${b.toStringAsFixed(0)} → ₹${s.toStringAsFixed(0)} × ${q.toStringAsFixed(0)} quantity", style: const TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w500)),
+          Text("₹${b.toStringAsFixed(0)} → ₹${s.toStringAsFixed(0)} × ${q.toStringAsFixed(0)} quantity", style: const TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w500)),
           const SizedBox(height: 16),
           Row(
             children: [
@@ -2664,7 +2664,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                       children: const [
                         Icon(Icons.edit_outlined, size: 14, color: Colors.grey),
                         SizedBox(width: 8),
-                        Text("Edit", style: TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500)),
+                        Text("Edit", style: TextStyle(color: Colors.grey, fontSize: 11, fontWeight: FontWeight.w500)),
                       ]
                     )
                   )
@@ -2703,9 +2703,9 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                                     child: const Center(child: Icon(Icons.close, color: Color(0xFFFF5252), size: 32)),
                                   ),
                                   const SizedBox(height: 20),
-                                  const Text("Are you sure?", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500)),
+                                  const Text("Are you sure?", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500)),
                                   const SizedBox(height: 12),
-                                  const Text("Do you really want to delete this record? This process cannot be undone.", textAlign: TextAlign.center, style: TextStyle(color: Colors.grey, fontSize: 13, height: 1.4)),
+                                  const Text("Do you really want to delete this record? This process cannot be undone.", textAlign: TextAlign.center, style: TextStyle(color: Colors.grey, fontSize: 11, height: 1.4)),
                                   const SizedBox(height: 30),
                                   Row(
                                     children: [
@@ -2750,7 +2750,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                       children: const [
                         Icon(Icons.delete_outline, size: 14, color: Colors.grey),
                         SizedBox(width: 8),
-                        Text("Delete", style: TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500)),
+                        Text("Delete", style: TextStyle(color: Colors.grey, fontSize: 11, fontWeight: FontWeight.w500)),
                       ]
                     )
                   )
@@ -2865,7 +2865,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       children: [
                         const SizedBox(height: 16),
-                        const Align(alignment: Alignment.centerLeft, child: Text("Profile", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2))),
+                        const Align(alignment: Alignment.centerLeft, child: Text("Profile", style: TextStyle(color: Colors.amber, fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: -0.2))),
                         const SizedBox(height: 24),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 20),
@@ -2884,9 +2884,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                    ]
                                 ),
                                 const SizedBox(height: 24),
-                                const Text("SHAMINI HUBERT", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
+                                const Text("SHAMINI HUBERT", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                                 const SizedBox(height: 6),
-                                const Text("SPYDEX Founder", style: TextStyle(color: Colors.grey, fontSize: 14)),
+                                const Text("SPYDEX Founder", style: TextStyle(color: Colors.grey, fontSize: 12)),
                                 const SizedBox(height: 36),
                                 Row(
                                    mainAxisAlignment: MainAxisAlignment.center,
@@ -2912,7 +2912,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 const Icon(Icons.account_balance_wallet, color: Colors.blueAccent, size: 22),
                                 const SizedBox(width: 16),
-                                Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [Text("Fund Margin", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500)), SizedBox(height: 6), Text("Manage your trading capital", style: TextStyle(color: Colors.grey, fontSize: 13))])
+                                Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [Text("Fund Margin", style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500)), SizedBox(height: 6), Text("Manage your trading capital", style: TextStyle(color: Colors.grey, fontSize: 11))])
                               ],
                             ),
                           ),
@@ -2928,7 +2928,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 const Icon(Icons.download, color: Colors.amber, size: 22),
                                 const SizedBox(width: 16),
-                                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Export CSV", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500)), const SizedBox(height: 6), Text("Download all ${stats['totalTrades']} trades", style: const TextStyle(color: Colors.grey, fontSize: 13))])
+                                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Export CSV", style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500)), const SizedBox(height: 6), Text("Download all ${stats['totalTrades']} trades", style: const TextStyle(color: Colors.grey, fontSize: 11))])
                               ],
                             ),
                           ),
@@ -2942,7 +2942,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               const Icon(Icons.settings, color: Colors.white38, size: 22),
                               const SizedBox(width: 16),
-                              Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [Text("Settings", style: TextStyle(color: Colors.grey, fontSize: 15, fontWeight: FontWeight.w500)), SizedBox(height: 6), Text("Coming soon", style: TextStyle(color: Colors.white38, fontSize: 13))])
+                              Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [Text("Settings", style: TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500)), SizedBox(height: 6), Text("Coming soon", style: TextStyle(color: Colors.white38, fontSize: 11))])
                             ],
                           ),
                         ),
@@ -2951,10 +2951,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(color: const Color(0xFF111111), borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.white10, width: 0.5)),
-                          child: const Text("More features coming soon — broker integrations, strategy tagging, and more.", style: TextStyle(color: Colors.grey, fontSize: 13, height: 1.5)),
+                          child: const Text("More features coming soon — broker integrations, strategy tagging, and more.", style: TextStyle(color: Colors.grey, fontSize: 11, height: 1.5)),
                         ),
                         const SizedBox(height: 30),
-                        const Center(child: Text("SPYDEX v2.0 — Your Premium Trading Journal", style: TextStyle(color: Colors.white38, fontSize: 12))),
+                        const Center(child: Text("SPYDEX v2.0 — Your Premium Trading Journal", style: TextStyle(color: Colors.white38, fontSize: 10))),
                         const SizedBox(height: 40),
                       ],
                     ),
@@ -2967,7 +2967,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget stat(String title, String value, Color color) {
-    return Column(children: [Text(value, style: TextStyle(color: color, fontSize: 18, fontWeight: FontWeight.w500)), const SizedBox(height: 6), Text(title, style: const TextStyle(color: Colors.grey, fontSize: 13))]);
+    return Column(children: [Text(value, style: TextStyle(color: color, fontSize: 16, fontWeight: FontWeight.w500)), const SizedBox(height: 6), Text(title, style: const TextStyle(color: Colors.grey, fontSize: 11))]);
   }
 }
 
@@ -3030,13 +3030,13 @@ class _FundMarginScreenState extends State<FundMarginScreen> {
                     },
                     child: Container(
                       height: 48, padding: const EdgeInsets.symmetric(horizontal: 16), decoration: BoxDecoration(color: const Color(0xFF222222), borderRadius: BorderRadius.circular(12)),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(DateFormat('dd MMM yyyy').format(popupDate), style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)), const Icon(Icons.calendar_today, color: Colors.grey, size: 18)]),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(DateFormat('dd MMM yyyy').format(popupDate), style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)), const Icon(Icons.calendar_today, color: Colors.grey, size: 18)]),
                     ),
                   ),
                   const SizedBox(height: 12),
                   Container(
                     height: 48, padding: const EdgeInsets.symmetric(horizontal: 16), decoration: BoxDecoration(color: const Color(0xFF222222), borderRadius: BorderRadius.circular(12)),
-                    child: Center(child: TextField(controller: amountController, keyboardType: const TextInputType.numberWithOptions(decimal: true), style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500), decoration: const InputDecoration(hintText: "Enter amount", hintStyle: TextStyle(color: Colors.grey, fontSize: 14), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero))),
+                    child: Center(child: TextField(controller: amountController, keyboardType: const TextInputType.numberWithOptions(decimal: true), style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500), decoration: const InputDecoration(hintText: "Enter amount", hintStyle: TextStyle(color: Colors.grey, fontSize: 12), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero))),
                   ),
                 ],
               ),
@@ -3086,13 +3086,13 @@ class _FundMarginScreenState extends State<FundMarginScreen> {
                     },
                     child: Container(
                       height: 48, padding: const EdgeInsets.symmetric(horizontal: 16), decoration: BoxDecoration(color: const Color(0xFF222222), borderRadius: BorderRadius.circular(12)),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(DateFormat('dd MMM yyyy').format(popupDate), style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)), const Icon(Icons.calendar_today, color: Colors.grey, size: 18)]),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(DateFormat('dd MMM yyyy').format(popupDate), style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500)), const Icon(Icons.calendar_today, color: Colors.grey, size: 18)]),
                     ),
                   ),
                   const SizedBox(height: 12),
                   Container(
                     height: 48, padding: const EdgeInsets.symmetric(horizontal: 16), decoration: BoxDecoration(color: const Color(0xFF222222), borderRadius: BorderRadius.circular(12)),
-                    child: Center(child: TextField(controller: amountController, keyboardType: const TextInputType.numberWithOptions(decimal: true), style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500), decoration: const InputDecoration(hintText: "Enter amount", hintStyle: TextStyle(color: Colors.grey, fontSize: 14), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero))),
+                    child: Center(child: TextField(controller: amountController, keyboardType: const TextInputType.numberWithOptions(decimal: true), style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500), decoration: const InputDecoration(hintText: "Enter amount", hintStyle: TextStyle(color: Colors.grey, fontSize: 12), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero))),
                   ),
                 ],
               ),
@@ -3232,13 +3232,13 @@ class _FundMarginScreenState extends State<FundMarginScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
-                                Text("Available margin (Cash + Collateral)", style: TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
+                                Text("Available margin (Cash + Collateral)", style: TextStyle(color: Colors.grey, fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
                                 SizedBox(width: 6),
                                 Icon(Icons.info_outline, color: Colors.grey, size: 14),
                               ],
                             ),
                             const SizedBox(height: 8),
-                            Text("₹${runningBalance.toStringAsFixed(2)}", style: const TextStyle(color: Colors.amber, fontSize: 41, fontWeight: FontWeight.w500, letterSpacing: -1)),
+                            Text("₹${runningBalance.toStringAsFixed(2)}", style: const TextStyle(color: Colors.amber, fontSize: 39, fontWeight: FontWeight.w500, letterSpacing: -1)),
                             const SizedBox(height: 24),
                             Row(
                               children: [
@@ -3355,15 +3355,15 @@ class _SwipeableTransactionTileState extends State<_SwipeableTransactionTile> {
               child: ListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                 leading: Container(width: 40, height: 40, decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadius.circular(10)), child: Icon(iconData, color: iconColor, size: 20)),
-                title: Text(widget.item.title, style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500)),
-                subtitle: Padding(padding: const EdgeInsets.only(top: 4), child: Text("${DateFormat('dd MMM hh:mm a').format(widget.item.date)} · ${widget.item.subtitle}", style: const TextStyle(color: Colors.white54, fontSize: 12))),
+                title: Text(widget.item.title, style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500)),
+                subtitle: Padding(padding: const EdgeInsets.only(top: 4), child: Text("${DateFormat('dd MMM hh:mm a').format(widget.item.date)} · ${widget.item.subtitle}", style: const TextStyle(color: Colors.white54, fontSize: 10))),
                 trailing: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("${widget.item.isCredit ? '+' : '-'}₹${widget.item.amount.toStringAsFixed(2)}", style: TextStyle(color: iconColor, fontSize: 15, fontWeight: FontWeight.w500)),
+                    Text("${widget.item.isCredit ? '+' : '-'}₹${widget.item.amount.toStringAsFixed(2)}", style: TextStyle(color: iconColor, fontSize: 13, fontWeight: FontWeight.w500)),
                     const SizedBox(height: 4),
-                    Text("₹${widget.item.balance.toStringAsFixed(2)}", style: const TextStyle(color: Colors.white54, fontSize: 12, fontWeight: FontWeight.w500)),
+                    Text("₹${widget.item.balance.toStringAsFixed(2)}", style: const TextStyle(color: Colors.white54, fontSize: 10, fontWeight: FontWeight.w500)),
                   ],
                 ),
               ),
