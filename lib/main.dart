@@ -617,7 +617,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           const Text("Cumulative net P&L over time", style: TextStyle(color: Colors.grey, fontSize: 11)),
           const SizedBox(height: 24),
           SizedBox(
-            height: 220,
+            height: 260,
             child: LineChart(
               LineChartData(
                 minY: minY - 50, maxY: maxY + 50, gridData: FlGridData(show: false),
@@ -779,14 +779,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget statCard(String title, String value, Color color) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-          const SizedBox(height: 12),
-          Text(value, style: TextStyle(color: color, fontSize: 24, fontWeight: FontWeight.bold)),
+          Text(title, style: const TextStyle(color: Colors.grey, fontSize: 13)),
+          const SizedBox(height: 16),
+          Text(value, style: TextStyle(color: color, fontSize: 26, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -907,7 +907,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Expanded(
                             flex: 5,
                             child: SizedBox(
-                              height: 180,
+                              height: 220,
                               child: PieChart(
                                 PieChartData(
                                   pieTouchData: PieTouchData(
@@ -1064,26 +1064,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           const SizedBox(height: 20),
                           Container(
-                            width: double.infinity, padding: const EdgeInsets.symmetric(vertical: 28),
+                            width: double.infinity, padding: const EdgeInsets.symmetric(vertical: 36),
                             decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)),
                             child: Column(
                               children: [
-                                const Text("Total Profit / Loss", style: TextStyle(color: Colors.grey, fontSize: 13)),
-                                const SizedBox(height: 8),
-                                Text("${totalProfit >= 0 ? "" : "-"}₹${totalProfit.abs().toStringAsFixed(2)}", style: TextStyle(color: totalProfit >= 0 ? const Color(0xFF4CAF50) : const Color(0xFFFF5252), fontSize: 42, fontWeight: FontWeight.w800, letterSpacing: -1)),
+                                const Text("Total Profit / Loss", style: TextStyle(color: Colors.grey, fontSize: 14)),
+                                const SizedBox(height: 12),
+                                Text("${totalProfit >= 0 ? "" : "-"}₹${totalProfit.abs().toStringAsFixed(2)}", style: TextStyle(color: totalProfit >= 0 ? const Color(0xFF4CAF50) : const Color(0xFFFF5252), fontSize: 48, fontWeight: FontWeight.w700, letterSpacing: -1)),
                               ],
                             ),
                           ),
-                          const SizedBox(height: 12),
-                          Row(children: [Expanded(child: statCard("Total Trades", "$totalTrades", Colors.white)), const SizedBox(width: 12), Expanded(child: statCard("Win Rate", "${winRate.toStringAsFixed(1)}%", Colors.white))]),
-                          const SizedBox(height: 12),
-                          Row(children: [Expanded(child: statCard("Win Trades", "$winTrades", Colors.greenAccent)), const SizedBox(width: 12), Expanded(child: statCard("Loss Trades", "$lossTrades", const Color(0xFFFF5252)))]),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 16),
+                          Row(children: [Expanded(child: statCard("Total Trades", "$totalTrades", Colors.white)), const SizedBox(width: 16), Expanded(child: statCard("Win Rate", "${winRate.toStringAsFixed(1)}%", Colors.white))]),
+                          const SizedBox(height: 16),
+                          Row(children: [Expanded(child: statCard("Win Trades", "$winTrades", Colors.greenAccent)), const SizedBox(width: 16), Expanded(child: statCard("Loss Trades", "$lossTrades", const Color(0xFFFF5252)))]),
+                          const SizedBox(height: 16),
                           Row(
                             children: [
-                              Expanded(child: Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Avg. P&L / Trade", style: TextStyle(color: Colors.grey, fontSize: 12)), const SizedBox(height: 12), FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: Text("${avgProfit >= 0 ? "" : "-"}₹${avgProfit.abs().toStringAsFixed(2)}", style: TextStyle(color: avgProfit >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontSize: 20, fontWeight: FontWeight.bold)))]))),
-                              const SizedBox(width: 12),
-                              Expanded(child: Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Total Tax", style: TextStyle(color: Colors.grey, fontSize: 12)), const SizedBox(height: 12), FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: Text("-₹${totalTax.abs().toStringAsFixed(2)}", style: const TextStyle(color: Color(0xFFFF5252), fontSize: 20, fontWeight: FontWeight.bold)))]))),
+                              Expanded(child: Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Avg. P&L / Trade", style: TextStyle(color: Colors.grey, fontSize: 13)), const SizedBox(height: 16), FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: Text("${avgProfit >= 0 ? "" : "-"}₹${avgProfit.abs().toStringAsFixed(2)}", style: TextStyle(color: avgProfit >= 0 ? Colors.greenAccent : const Color(0xFFFF5252), fontSize: 24, fontWeight: FontWeight.bold)))]))),
+                              const SizedBox(width: 16),
+                              Expanded(child: Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Total Tax", style: TextStyle(color: Colors.grey, fontSize: 13)), const SizedBox(height: 16), FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft, child: Text("-₹${totalTax.abs().toStringAsFixed(2)}", style: const TextStyle(color: Color(0xFFFF5252), fontSize: 24, fontWeight: FontWeight.bold)))]))),
                             ],
                           ),
                           const SizedBox(height: 20),
@@ -1891,19 +1891,19 @@ class _EntryScreenState extends State<EntryScreen> {
   }
 
   Widget label(String text) {
-    return Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(text, style: const TextStyle(color: Colors.grey, fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 0.5)));
+    return Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(text, style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 0.5)));
   }
 
   Widget inputField(TextEditingController controller, {Function? onChanged, String? hintText}) {
     return Container(
-      height: 48, padding: const EdgeInsets.symmetric(horizontal: 16),
+      height: 56, padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(color: const Color(0xFF222222), borderRadius: BorderRadius.circular(12)),
       child: Center(
         child: TextField(
           controller: controller,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
-          decoration: InputDecoration(hintText: hintText, hintStyle: const TextStyle(color: Colors.white38, fontSize: 15), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero),
+          style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          decoration: InputDecoration(hintText: hintText, hintStyle: const TextStyle(color: Colors.white38, fontSize: 16), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero),
           onChanged: (val) { if (onChanged != null) onChanged(); },
         ),
       ),
@@ -1915,9 +1915,9 @@ class _EntryScreenState extends State<EntryScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(labelText, style: TextStyle(color: isBold ? Colors.white : Colors.grey, fontSize: isBold ? 15 : 14, fontWeight: isBold ? FontWeight.bold : FontWeight.w500)),
+        Text(labelText, style: TextStyle(color: isBold ? Colors.white : Colors.grey, fontSize: isBold ? 16 : 15, fontWeight: isBold ? FontWeight.bold : FontWeight.w500)),
         Text("${value >= 0 && !isCharges ? "+" : (isCharges && value == 0 ? "-" : "-")}₹${value.abs().toStringAsFixed(2)}",
-          style: TextStyle(color: valColor, fontSize: isBold ? 16 : 14, fontWeight: FontWeight.bold),
+          style: TextStyle(color: valColor, fontSize: isBold ? 18 : 16, fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -1931,12 +1931,12 @@ class _EntryScreenState extends State<EntryScreen> {
         child: Column(
           children: [
             const SizedBox(height: 16),
-            const Align(alignment: Alignment.centerLeft, child: Text("Add Entry", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.bold, letterSpacing: 1.2))),
+            const Align(alignment: Alignment.centerLeft, child: Text("Add Entry", style: TextStyle(color: Colors.amber, fontSize: 26, fontWeight: FontWeight.bold, letterSpacing: 1.2))),
             const SizedBox(height: 24),
 
             // Toggle Bar
             Container(
-              height: 50,
+              height: 60,
               decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16)),
               child: Row(
                 children: [
@@ -1945,7 +1945,7 @@ class _EntryScreenState extends State<EntryScreen> {
                       onTap: () => setState(() { isTradeEntry = true; _hasAttemptedSave = false; }),
                       child: Container(
                         decoration: BoxDecoration(color: isTradeEntry ? Colors.amber.withOpacity(0.15) : Colors.transparent, borderRadius: BorderRadius.circular(16), border: isTradeEntry ? Border.all(color: Colors.amber.withOpacity(0.5)) : null),
-                        child: Center(child: Text("Trade Entry", style: TextStyle(color: isTradeEntry ? Colors.amber : Colors.grey, fontWeight: isTradeEntry ? FontWeight.bold : FontWeight.w500))),
+                        child: Center(child: Text("Trade Entry", style: TextStyle(color: isTradeEntry ? Colors.amber : Colors.grey, fontSize: 16, fontWeight: isTradeEntry ? FontWeight.bold : FontWeight.w500))),
                       ),
                     ),
                   ),
@@ -1954,7 +1954,7 @@ class _EntryScreenState extends State<EntryScreen> {
                       onTap: () => setState(() { isTradeEntry = false; _hasAttemptedSave = false; }),
                       child: Container(
                         decoration: BoxDecoration(color: !isTradeEntry ? Colors.amber.withOpacity(0.15) : Colors.transparent, borderRadius: BorderRadius.circular(16), border: !isTradeEntry ? Border.all(color: Colors.amber.withOpacity(0.5)) : null),
-                        child: Center(child: Text("Tax Entry", style: TextStyle(color: !isTradeEntry ? Colors.amber : Colors.grey, fontWeight: !isTradeEntry ? FontWeight.bold : FontWeight.w500))),
+                        child: Center(child: Text("Tax Entry", style: TextStyle(color: !isTradeEntry ? Colors.amber : Colors.grey, fontSize: 16, fontWeight: !isTradeEntry ? FontWeight.bold : FontWeight.w500))),
                       ),
                     ),
                   ),
@@ -1965,7 +1965,7 @@ class _EntryScreenState extends State<EntryScreen> {
 
             // Form Content
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.white10, width: 0.5)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1976,7 +1976,7 @@ class _EntryScreenState extends State<EntryScreen> {
               GestureDetector(
                 onTap: _pickAndParseCSV,
                 child: Container(
-                  height: 120,
+                  height: 150,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: const Color(0xFF161616),
@@ -1986,60 +1986,60 @@ class _EntryScreenState extends State<EntryScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.cloud_upload_rounded, color: Colors.amber.withOpacity(0.8), size: 40),
-                      const SizedBox(height: 12),
-                      const Text("Browse Files to upload", style: TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 4),
-                      const Text("Supported formats: CSV, Excel", style: TextStyle(color: Colors.white38, fontSize: 11)),
+                      Icon(Icons.cloud_upload_rounded, color: Colors.amber.withOpacity(0.8), size: 48),
+                      const SizedBox(height: 16),
+                      const Text("Browse Files to upload", style: TextStyle(color: Colors.white70, fontSize: 16, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 6),
+                      const Text("Supported formats: CSV, Excel", style: TextStyle(color: Colors.white38, fontSize: 13)),
                     ],
                   ),
                 ),
               ),
               if (uploadedFileName != null)
                 Container(
-                  margin: const EdgeInsets.only(top: 12),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  margin: const EdgeInsets.only(top: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   decoration: BoxDecoration(
                     color: const Color(0xFF222222),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.description, color: Colors.blueAccent, size: 24),
+                      const Icon(Icons.description, color: Colors.blueAccent, size: 28),
                       const SizedBox(width: 12),
-                      Expanded(child: Text(uploadedFileName! + (pendingTrades.isNotEmpty ? ' (${pendingTrades.length} pending)' : ''), style: const TextStyle(color: Colors.white, fontSize: 13))),
+                      Expanded(child: Text(uploadedFileName! + (pendingTrades.isNotEmpty ? ' (${pendingTrades.length} pending)' : ''), style: const TextStyle(color: Colors.white, fontSize: 15))),
                       GestureDetector(
                         onTap: () {
                           setState(() { uploadedFileName = null; pendingTrades.clear(); });
                         },
-                        child: const Icon(Icons.delete_outline, color: Colors.grey, size: 20),
+                        child: const Icon(Icons.delete_outline, color: Colors.grey, size: 24),
                       )
                     ],
                   ),
                 ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
             ],
 
                   label("DATE"),
                   GestureDetector(
                     onTap: pickDate,
                     child: Container(
-                      height: 48, padding: const EdgeInsets.symmetric(horizontal: 16),
+                      height: 56, padding: const EdgeInsets.symmetric(horizontal: 16),
                       decoration: BoxDecoration(color: const Color(0xFF222222), borderRadius: BorderRadius.circular(12)),
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                        Text(formatDate(selectedDate), style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
-                        const Icon(Icons.calendar_today_outlined, size: 16, color: Colors.grey),
+                        Text(formatDate(selectedDate), style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                        const Icon(Icons.calendar_today_outlined, size: 20, color: Colors.grey),
                       ]),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 24),
 
                   if (isTradeEntry) ...[
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       label("NAME OF THE STOCK"),
                       GestureDetector(
                         onTap: _addStock,
-                        child: Row(children: const [Icon(Icons.add, color: Colors.amber, size: 16), SizedBox(width: 4), Text("Add a Stock", style: TextStyle(color: Colors.amber, fontSize: 11, fontWeight: FontWeight.bold))]),
+                        child: Row(children: const [Icon(Icons.add, color: Colors.amber, size: 18), SizedBox(width: 4), Text("Add a Stock", style: TextStyle(color: Colors.amber, fontSize: 13, fontWeight: FontWeight.bold))]),
                       ),
                     ]),
                     const SizedBox(height: 8),
@@ -2049,7 +2049,7 @@ class _EntryScreenState extends State<EntryScreen> {
                         List<String> stocks = [];
                         if (snapshot.hasData) stocks = snapshot.data!.docs.map((doc) => doc['name'] as String).toList();
                         return Container(
-                          height: 48, padding: const EdgeInsets.symmetric(horizontal: 16),
+                          height: 56, padding: const EdgeInsets.symmetric(horizontal: 16),
                           decoration: BoxDecoration(color: const Color(0xFF222222), borderRadius: BorderRadius.circular(12)),
                           child: Autocomplete<String>(
                             key: autocompleteKey,
@@ -2064,8 +2064,8 @@ class _EntryScreenState extends State<EntryScreen> {
                                 alignment: Alignment.centerLeft,
                                 child: TextField(
                                   controller: controller, focusNode: focusNode, textAlignVertical: TextAlignVertical.center,
-                                  decoration: const InputDecoration(hintText: "Type or Select a Stock", hintStyle: TextStyle(color: Colors.grey, fontSize: 15, height: 1.2), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero, suffixIcon: Icon(Icons.search, color: Colors.grey, size: 18), suffixIconConstraints: BoxConstraints(minWidth: 24, minHeight: 24)),
-                                  style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                                  decoration: const InputDecoration(hintText: "Type or Select a Stock", hintStyle: TextStyle(color: Colors.grey, fontSize: 16, height: 1.2), border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.zero, suffixIcon: Icon(Icons.search, color: Colors.grey, size: 22), suffixIconConstraints: BoxConstraints(minWidth: 28, minHeight: 28)),
+                                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                                   onChanged: (val) { selectedStock = val.trim().toUpperCase(); }
                                 ),
                               );
@@ -2076,12 +2076,12 @@ class _EntryScreenState extends State<EntryScreen> {
                                 child: Material(
                                   color: const Color(0xFF2A2A2A), borderRadius: BorderRadius.circular(12), elevation: 4.0,
                                   child: ConstrainedBox(
-                                    constraints: BoxConstraints(maxHeight: 200, maxWidth: MediaQuery.of(context).size.width - 72),
+                                    constraints: BoxConstraints(maxHeight: 250, maxWidth: MediaQuery.of(context).size.width - 72),
                                     child: ListView.builder(
                                       padding: EdgeInsets.zero, shrinkWrap: true, itemCount: options.length,
                                       itemBuilder: (BuildContext context, int index) {
                                         final String option = options.elementAt(index);
-                                        return InkWell(onTap: () => onSelected(option), child: Padding(padding: const EdgeInsets.all(16.0), child: Text(option, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))));
+                                        return InkWell(onTap: () => onSelected(option), child: Padding(padding: const EdgeInsets.all(20.0), child: Text(option, style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold))));
                                       },
                                     ),
                                   ),
@@ -2092,13 +2092,13 @@ class _EntryScreenState extends State<EntryScreen> {
                         );
                       }
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24),
                     label("BUY VALUE"),
                     inputField(buyController, onChanged: calculateTrade),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24),
                     label("SELL VALUE"),
                     inputField(sellController, onChanged: calculateTrade),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24),
                     label("QUANTITY"),
                     inputField(qtyController),
 
@@ -2118,7 +2118,7 @@ class _EntryScreenState extends State<EntryScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             inputField(taxController, onChanged: () => setState(() {}), hintText: savedTax > 0 ? "Saved: ₹${savedTax.toStringAsFixed(2)}" : ""),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 24),
                             StreamBuilder<QuerySnapshot>(
                               stream: FirebaseFirestore.instance.collection('trades_v2')
                                   .where('time', isGreaterThanOrEqualTo: Timestamp.fromDate(DateTime(selectedDate.year, selectedDate.month, selectedDate.day)))
@@ -2133,17 +2133,17 @@ class _EntryScreenState extends State<EntryScreen> {
                                 double dailyNet = dailyGross - curTax;
 
                                 return Container(
-                                  padding: const EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(20),
                                   decoration: BoxDecoration(color: const Color(0xFF111111), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white10)),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("Day's Overview - ${formatDate(selectedDate)}", style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.bold)),
-                                      const SizedBox(height: 12),
+                                      Text("Day's Overview - ${formatDate(selectedDate)}", style: const TextStyle(color: Colors.grey, fontSize: 14, fontWeight: FontWeight.bold)),
+                                      const SizedBox(height: 16),
                                       summaryRow("Day's Gross P/L", dailyGross),
-                                      const SizedBox(height: 8),
+                                      const SizedBox(height: 12),
                                       summaryRow("Day's Tax", curTax, isCharges: true),
-                                      const Padding(padding: EdgeInsets.symmetric(vertical: 12), child: Divider(color: Colors.white10, height: 1)),
+                                      const Padding(padding: EdgeInsets.symmetric(vertical: 16), child: Divider(color: Colors.white10, height: 1)),
                                       summaryRow("Day's Net P/L", dailyNet, isBold: true),
                                     ],
                                   ),
@@ -2158,24 +2158,24 @@ class _EntryScreenState extends State<EntryScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
             
             if (isTradeEntry) ...[
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.white10, width: 0.5)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [label("SUMMARY"), const SizedBox(height: 12), summaryRow("Gross Profit / Loss", gross, isBold: true)],
+                  children: [label("SUMMARY"), const SizedBox(height: 16), summaryRow("Gross Profit / Loss", gross, isBold: true)],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
             ],
 
             if (isTradeEntry && showTradeWarning && _hasAttemptedSave && !_isSaving)
-              const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(bottom: 12), child: Text("Please fill in Buy Value, Sell Value, and Quantity.", style: TextStyle(color: Color(0xFFFF5252), fontSize: 13)))),
+              const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(bottom: 16), child: Text("Please fill in Buy Value, Sell Value, and Quantity.", style: TextStyle(color: Color(0xFFFF5252), fontSize: 14)))),
             if (!isTradeEntry && showTaxWarning && _hasAttemptedSave && !_isSaving)
-              const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(bottom: 12), child: Text("Please enter the Tax Value.", style: TextStyle(color: Color(0xFFFF5252), fontSize: 13)))),
+              const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(bottom: 16), child: Text("Please enter the Tax Value.", style: TextStyle(color: Color(0xFFFF5252), fontSize: 14)))),
 
             GestureDetector(
               onTap: () {
@@ -2184,14 +2184,14 @@ class _EntryScreenState extends State<EntryScreen> {
                 else if (!isTradeEntry && !showTaxWarning && !_isSaving) { saveTax(); }
               },
               child: Container(
-                width: double.infinity, height: 55,
-                decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(14), border: Border.all(color: Colors.amber.withOpacity(0.4), width: 1.5)),
+                width: double.infinity, height: 65,
+                decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.amber.withOpacity(0.4), width: 2.0)),
                 child: Center(
-                  child: Text(_isSaving ? "Saving..." : (isTradeEntry ? "Save Trade" : "Save Tax"), style: TextStyle(color: _isSaving ? Colors.amber.withOpacity(0.5) : Colors.amber, fontSize: 16, fontWeight: FontWeight.bold)),
+                  child: Text(_isSaving ? "Saving..." : (isTradeEntry ? "Save Trade" : "Save Tax"), style: TextStyle(color: _isSaving ? Colors.amber.withOpacity(0.5) : Colors.amber, fontSize: 18, fontWeight: FontWeight.bold)),
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 48),
           ],
         ),
       ),
