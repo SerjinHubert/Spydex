@@ -27,15 +27,16 @@ jobs:
         env:
           SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
 
-      - name: Package IPA from XCArchive
+      - name: Package IPA
         run: |
-          cd build/ios/archive/Runner.xcarchive/Products/Applications
+          APP_PATH=$(find build -name "Runner.app" -type d | head -n 1)
+          echo "Found Runner.app at: $APP_PATH"
           mkdir Payload
-          cp -r Runner.app Payload/
-          zip -r -y ../../../../../SpydexUnsigned.ipa Payload/
+          cp -r "$APP_PATH" Payload/
+          zip -r -y SpydexUnsigned.ipa Payload/
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Spydex-iOS-App
-          path: build/ios/SpydexUnsigned.ipa
+          path: SpydexUnsigned.ipa
