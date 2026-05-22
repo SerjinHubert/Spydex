@@ -46,7 +46,7 @@ class AdaptiveScaleWrapper extends StatelessWidget {
 
     return Transform.scale(
       scale: scale,
-      alignment: Alignment.topLeft,
+      alignment: Alignment.topCenter,
       child: SizedBox(
         width: media.size.width / scale,
         height: media.size.height / scale,
@@ -75,7 +75,23 @@ class SpydexApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.black),
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Colors.black,
+        textTheme: ThemeData.dark().textTheme.apply(
+          bodyColor: Colors.white,
+          displayColor: Colors.white,
+        ).copyWith(
+          bodyLarge: const TextStyle(letterSpacing: -0.3),
+          bodyMedium: const TextStyle(letterSpacing: -0.3),
+          bodySmall: const TextStyle(letterSpacing: -0.3),
+          titleLarge: const TextStyle(letterSpacing: -0.4),
+          titleMedium: const TextStyle(letterSpacing: -0.4),
+          titleSmall: const TextStyle(letterSpacing: -0.4),
+          labelLarge: const TextStyle(letterSpacing: -0.3),
+          labelMedium: const TextStyle(letterSpacing: -0.3),
+          labelSmall: const TextStyle(letterSpacing: -0.3),
+        ),
+      ),
       builder: (context, child) {
         return AdaptiveScaleWrapper(child: child!);
       },
@@ -191,9 +207,9 @@ class _LockScreenState extends State<LockScreen> with SingleTickerProviderStateM
               child: Column(
                 children: [
                   const Spacer(flex: 2),
-                  Text("SPYDEX", style: TextStyle(color: Colors.amber, fontSize: titleSize, fontWeight: FontWeight.w500, letterSpacing: 3)),
+                  Text("SPYDEX", style: TextStyle(color: Colors.amber, fontSize: titleSize, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
                   const SizedBox(height: 6),
-                  const Text("Focus. Discipline. Trade.", style: TextStyle(color: Colors.amber, fontSize: 13, letterSpacing: 1.2, fontWeight: FontWeight.w400)),
+                  const Text("Focus. Discipline. Trade.", style: TextStyle(color: Colors.amber, fontSize: 13, letterSpacing: -0.2, fontWeight: FontWeight.w400)),
                   const Spacer(flex: 3),
                   Container(
                     height: avatarSize,
@@ -212,7 +228,7 @@ class _LockScreenState extends State<LockScreen> with SingleTickerProviderStateM
                     child: profileImagePath == null ? const Icon(Icons.person, color: Colors.amber, size: 40) : null,
                   ),
                   const Spacer(flex: 2),
-                  const Text("Welcome Trader", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: 1.1)),
+                  const Text("Welcome Trader", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                   const SizedBox(height: 8),
                   const Text("Enter Passcode", style: TextStyle(color: Colors.grey, fontSize: 16)),
                   const Spacer(flex: 3),
@@ -1085,7 +1101,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("SPYDEX", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: 1.2)),
+                              const Text("SPYDEX", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                               GestureDetector(
                                 onTap: () => exportCSV(context),
                                 child: Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(border: Border.all(color: Colors.white24), borderRadius: BorderRadius.circular(20)), child: const Text("Export CSV", style: TextStyle(color: Colors.grey, fontSize: 12))),
@@ -1248,7 +1264,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 16),
-                          const Text("Calendar", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: 1.2)),
+                          const Text("Calendar", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                           const SizedBox(height: 24),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1815,7 +1831,7 @@ class _EntryScreenState extends State<EntryScreen> {
                 children: const [
                   Icon(Icons.check_circle, color: Colors.greenAccent, size: 80),
                   SizedBox(height: 20),
-                  Text("Saved!", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500, letterSpacing: 1.1)),
+                  Text("Saved!", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                 ],
               ),
             ),
@@ -1931,7 +1947,7 @@ class _EntryScreenState extends State<EntryScreen> {
   }
 
   Widget label(String text) {
-    return Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(text, style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500, letterSpacing: 0.5)));
+    return Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(text, style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500, letterSpacing: -0.3)));
   }
 
   Widget inputField(TextEditingController controller, {Function? onChanged, String? hintText}) {
@@ -1971,7 +1987,7 @@ class _EntryScreenState extends State<EntryScreen> {
         child: Column(
           children: [
             const SizedBox(height: 16),
-            const Align(alignment: Alignment.centerLeft, child: Text("Add Entry", style: TextStyle(color: Colors.amber, fontSize: 26, fontWeight: FontWeight.w500, letterSpacing: 1.2))),
+            const Align(alignment: Alignment.centerLeft, child: Text("Add Entry", style: TextStyle(color: Colors.amber, fontSize: 26, fontWeight: FontWeight.w500, letterSpacing: -0.2))),
             const SizedBox(height: 24),
 
             // Toggle Bar
@@ -2260,7 +2276,7 @@ class HistoryScreen extends StatelessWidget {
                   children: [
                     const Text(
                       "Trade History",
-                      style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: 1.2),
+                      style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2),
                     ),
                     Text("$count trades", style: const TextStyle(color: Colors.grey, fontSize: 13)),
                   ],
@@ -2373,7 +2389,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                 children: [
                   const Icon(Icons.check_circle, color: Colors.greenAccent, size: 80),
                   const SizedBox(height: 20),
-                  Text(msg, style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500, letterSpacing: 1.1)),
+                  Text(msg, style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                 ],
               ),
             ),
@@ -2419,7 +2435,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w500, letterSpacing: 0.5)),
+        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
         const SizedBox(height: 8),
         Container(
           height: 44,
@@ -2468,7 +2484,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                  ]
               ),
               const SizedBox(height: 24),
-              const Text("DATE", style: TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w500, letterSpacing: 0.5)),
+              const Text("DATE", style: TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
               const SizedBox(height: 8),
               GestureDetector(
                 onTap: () async {
@@ -2492,7 +2508,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
                 )
               ),
               const SizedBox(height: 20),
-              const Text("STOCK", style: TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w500, letterSpacing: 0.5)),
+              const Text("STOCK", style: TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
               const SizedBox(height: 8),
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance.collection('stocks').orderBy('name').snapshots(),
@@ -2849,7 +2865,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       children: [
                         const SizedBox(height: 16),
-                        const Align(alignment: Alignment.centerLeft, child: Text("Profile", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: 1.2))),
+                        const Align(alignment: Alignment.centerLeft, child: Text("Profile", style: TextStyle(color: Colors.amber, fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: -0.2))),
                         const SizedBox(height: 24),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 20),
@@ -2868,7 +2884,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                    ]
                                 ),
                                 const SizedBox(height: 24),
-                                const Text("SHAMINI HUBERT", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500, letterSpacing: 1.1)),
+                                const Text("SHAMINI HUBERT", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                                 const SizedBox(height: 6),
                                 const Text("SPYDEX Founder", style: TextStyle(color: Colors.grey, fontSize: 14)),
                                 const SizedBox(height: 36),
@@ -3216,7 +3232,7 @@ class _FundMarginScreenState extends State<FundMarginScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
-                                Text("Available margin (Cash + Collateral)", style: TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500, letterSpacing: 0.5)),
+                                Text("Available margin (Cash + Collateral)", style: TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
                                 SizedBox(width: 6),
                                 Icon(Icons.info_outline, color: Colors.grey, size: 14),
                               ],
