@@ -25,6 +25,47 @@ void main() async {
   runApp(const SpydexApp());
 }
 
+class AdaptiveScaleWrapper extends StatelessWidget {
+  final Widget child;
+  const AdaptiveScaleWrapper({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    // Base design width (iPhone 12/13/14 Pro)
+    double baseWidth = 390.0;
+    
+    // Calculate the precise scale factor needed to match the current screen width.
+    double scale = media.size.width / baseWidth;
+
+    // Constrain scale to prevent extreme zoom on tablets/web
+    if (scale > 1.35) scale = 1.35;
+    if (scale < 0.85) scale = 0.85;
+
+    return Transform.scale(
+      scale: scale,
+      alignment: Alignment.topLeft,
+      child: SizedBox(
+        width: media.size.width / scale,
+        height: media.size.height / scale,
+        child: MediaQuery(
+          // Pass down the simulated dimensions to all children
+          data: media.copyWith(
+            size: Size(media.size.width / scale, media.size.height / scale),
+            viewInsets: media.viewInsets / scale,
+            viewPadding: media.viewPadding / scale,
+            padding: media.padding / scale,
+            // Lock TextScaler because the Transform.scale already physically scales the text!
+            // This prevents "fatten numbers" on large accessibility settings without shrinking the UI.
+            textScaler: const TextScaler.linear(1.0),
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
 class SpydexApp extends StatelessWidget {
   const SpydexApp({super.key});
 
@@ -34,10 +75,7 @@ class SpydexApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.black),
       builder: (context, child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
-          child: child!,
-        );
+        return AdaptiveScaleWrapper(child: child!);
       },
       home: const LockScreen(),
     );
