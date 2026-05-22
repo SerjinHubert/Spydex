@@ -1,0 +1,26 @@
+name: Push Shorebird Patch
+
+on: workflow_dispatch
+
+jobs:
+  patch_ios:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Setup Shorebird
+        uses: shorebirdtech/setup-shorebird@v1
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Push Shorebird Patch (Over The Air)
+        run: shorebird patch ios
+        env:
+          SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
