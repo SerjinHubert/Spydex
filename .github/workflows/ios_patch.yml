@@ -21,6 +21,6 @@ jobs:
         run: flutter pub get
 
       - name: Push Shorebird Patch (Over The Air)
-        run: shorebird patch ios
+        run: shorebird patch ios --no-codesign
         env:
           SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
