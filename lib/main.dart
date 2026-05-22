@@ -16,12 +16,14 @@ import 'dart:ui' as ui;
 import 'package:file_picker/file_picker.dart';
 import 'package:excel/excel.dart' as ex;
 import 'data/trade_data.dart';
+import 'services/notification_service.dart';
 
 enum FilterType { allTime, month, stock }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await NotificationService.initialize();
   runApp(const SpydexApp());
 }
 
