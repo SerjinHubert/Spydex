@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "890974348612",
+    "project_id": "spydex-sh19",
+    "storage_bucket": "spydex-sh19.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890974348612:android:dd903b7dc16373a48b2311",
+        "android_client_info": {
+          "package_name": "com.example.spydex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk_sOJZGQcBbLRzV4ik6dJPtm1EpToCTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

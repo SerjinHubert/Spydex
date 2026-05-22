@@ -1,0 +1,38 @@
+name: spydex
+description: A new Flutter project
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  intl: ^0.18.1
+  csv: ^5.0.2
+  path_provider: 2.1.2
+  fl_chart: ^0.68.0
+  firebase_core: ^4.6.0
+  cloud_firestore: ^6.2.0
+  image_picker: ^1.2.1
+  shared_preferences: ^2.5.5
+  share_plus: ^12.0.2
+  file_picker: ^11.0.2
+  excel: ^4.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.14.3
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon_zoomed.png"
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/icon_zoomed.png"
+
+flutter:
+  uses-material-design: true
