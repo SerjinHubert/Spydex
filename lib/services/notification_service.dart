@@ -161,11 +161,11 @@ class NotificationService {
 
   static Future<void> _scheduleWeekly({required int id, required String title, required String body, required int day, required int hour, required int minute}) async {
     await _notificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      _nextInstanceOfWeekdayTime(day, hour, minute),
-      const NotificationDetails(
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: _nextInstanceOfWeekdayTime(day, hour, minute),
+      notificationDetails: const NotificationDetails(
         android: AndroidNotificationDetails(
           'spydex_weekly',
           'Weekly Review',
@@ -180,18 +180,17 @@ class NotificationService {
         ),
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
     );
   }
 
   static Future<void> _scheduleMonthly({required int id, required String title, required String body, required int dayOfMonth, required int hour, required int minute}) async {
     await _notificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      _nextInstanceOfMonthDayTime(dayOfMonth, hour, minute),
-      const NotificationDetails(
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: _nextInstanceOfMonthDayTime(dayOfMonth, hour, minute),
+      notificationDetails: const NotificationDetails(
         android: AndroidNotificationDetails(
           'spydex_monthly',
           'Monthly Review',
@@ -206,7 +205,6 @@ class NotificationService {
         ),
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dayOfMonthAndTime,
     );
   }
