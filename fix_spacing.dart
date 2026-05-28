@@ -1,0 +1,1 @@
+import 'dart:io'; void main() { var f = File('lib/main.dart'); var c = f.readAsStringSync(); c = c.replaceAll('letterSpacing: 3', 'letterSpacing: 0.5'); c = c.replaceAll('letterSpacing: 1.2', 'letterSpacing: -0.2'); c = c.replaceAll('letterSpacing: 1.1', 'letterSpacing: -0.2'); c = c.replaceAll('letterSpacing: 0.5', 'letterSpacing: -0.3'); f.writeAsStringSync(c); }

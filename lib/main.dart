@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:excel/excel.dart' as ex;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,8 +18,22 @@ import 'package:file_picker/file_picker.dart';
 import 'package:excel/excel.dart' as ex;
 import 'data/trade_data.dart';
 import 'services/notification_service.dart';
+import 'auth_screen.dart';
 
 enum FilterType { allTime, month, stock }
+
+
+CollectionReference<Map<String, dynamic>> getCollection(String path) {
+  final user = FirebaseAuth.instance.currentUser;
+  if (user == null) return FirebaseFirestore.instance.collection(path);
+  
+  // Link legacy root data directly to this specific email
+  if (user.email == 'aswinyp123@gmail.com') {
+    return FirebaseFirestore.instance.collection(path);
+  }
+  
+  return FirebaseFirestore.instance.collection('users').doc(user.uid).collection(path);
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -95,7 +110,7 @@ class SpydexApp extends StatelessWidget {
       builder: (context, child) {
         return AdaptiveScaleWrapper(child: child!);
       },
-      home: const LockScreen(),
+      home: const AuthWrapper(),
     );
   }
 }
@@ -476,7 +491,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void _showStockPicker() async {
-    var qs = await FirebaseFirestore.instance.collection('stocks').orderBy('name').get();
+    var qs = await getCollection('stocks').orderBy('name').get();
     List<String> stockNames = qs.docs.map((e) => e.data()['name'] as String).toList();
     if(stockNames.isEmpty) {
         if(mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No stocks added yet.")));
@@ -850,7 +865,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget buildCapitalCompositionPieChart(List<QueryDocumentSnapshot> trades, List<QueryDocumentSnapshot> taxes) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('transactions').snapshots(),
+      stream: getCollection('transactions').snapshots(),
       builder: (context, snapshotTrans) {
         if (!snapshotTrans.hasData) return const SizedBox();
 
@@ -1071,10 +1086,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('trades_v2').orderBy('time').snapshots(),
+      stream: getCollection('trades_v2').orderBy('time').snapshots(),
       builder: (context, snapshotTrades) {
          return StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('daily_taxes').snapshots(),
+            stream: getCollection('daily_taxes').snapshots(),
             builder: (context, snapshotTaxes) {
                 if (snapshotTrades.hasError) {
                   return Center(child: Text("Error (Trades): ${snapshotTrades.error}", style: const TextStyle(color: Colors.red)));
@@ -1229,10 +1244,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('trades_v2').orderBy('time').snapshots(),
+      stream: getCollection('trades_v2').orderBy('time').snapshots(),
       builder: (context, snapshotTrades) {
          return StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('daily_taxes').snapshots(),
+            stream: getCollection('daily_taxes').snapshots(),
             builder: (context, snapshotTaxes) {
                 if (snapshotTrades.hasError) {
                   return Center(child: Text("Error (Trades): ${snapshotTrades.error}", style: const TextStyle(color: Colors.red)));
@@ -1666,7 +1681,7 @@ class _EntryScreenState extends State<EntryScreen> {
         if (parsedDate != null && extractedTrades.isNotEmpty) {
             DateTime start = DateTime(parsedDate.year, parsedDate.month, parsedDate.day);
             DateTime end = start.add(const Duration(days: 1));
-            var qs = await FirebaseFirestore.instance.collection('trades_v2')
+            var qs = await getCollection('trades_v2')
                .where('time', isGreaterThanOrEqualTo: Timestamp.fromDate(start))
                .where('time', isLessThan: Timestamp.fromDate(end))
                .get();
@@ -1759,9 +1774,9 @@ class _EntryScreenState extends State<EntryScreen> {
               onPressed: () async {
                 if (addController.text.trim().isNotEmpty) {
                   String newStock = addController.text.trim().toUpperCase();
-                  var existing = await FirebaseFirestore.instance.collection('stocks').where('name', isEqualTo: newStock).get();
+                  var existing = await getCollection('stocks').where('name', isEqualTo: newStock).get();
                   if (existing.docs.isEmpty) {
-                    await FirebaseFirestore.instance.collection('stocks').add({'name': newStock});
+                    await getCollection('stocks').add({'name': newStock});
                   } else {
                     if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Stock already exists!")));
                   }
@@ -1850,13 +1865,13 @@ class _EntryScreenState extends State<EntryScreen> {
     double qty = double.tryParse(qtyController.text) ?? 0;
 
     if (selectedStock != null && selectedStock!.isNotEmpty) {
-       var qs = await FirebaseFirestore.instance.collection('stocks').where('name', isEqualTo: selectedStock).get();
+       var qs = await getCollection('stocks').where('name', isEqualTo: selectedStock).get();
        if (qs.docs.isEmpty) {
-           await FirebaseFirestore.instance.collection('stocks').add({'name': selectedStock});
+           await getCollection('stocks').add({'name': selectedStock});
        }
     }
 
-    await FirebaseFirestore.instance.collection('trades_v2').add({
+    await getCollection('trades_v2').add({
       "buy": buy,
       "sell": sell,
       "qty": qty,
@@ -1868,7 +1883,7 @@ class _EntryScreenState extends State<EntryScreen> {
     double taxAmount = double.tryParse(taxController.text) ?? 0;
     if (taxAmount > 0) {
       String dateStr = DateFormat('yyyy-MM-dd').format(selectedDate);
-      await FirebaseFirestore.instance.collection('daily_taxes').doc(dateStr).set({
+      await getCollection('daily_taxes').doc(dateStr).set({
         "taxAmount": taxAmount,
         "time": Timestamp.fromDate(selectedDate),
         "dateString": dateStr
@@ -1908,7 +1923,7 @@ class _EntryScreenState extends State<EntryScreen> {
     DateTime start = DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
     DateTime end = start.add(const Duration(days: 1));
 
-    var qs = await FirebaseFirestore.instance.collection('trades_v2')
+    var qs = await getCollection('trades_v2')
         .where('time', isGreaterThanOrEqualTo: Timestamp.fromDate(start))
         .where('time', isLessThan: Timestamp.fromDate(end))
         .get();
@@ -1933,7 +1948,7 @@ class _EntryScreenState extends State<EntryScreen> {
     String dateStr = DateFormat('yyyy-MM-dd').format(selectedDate);
 
     // Update or set daily_taxes
-    await FirebaseFirestore.instance.collection('daily_taxes').doc(dateStr).set({
+    await getCollection('daily_taxes').doc(dateStr).set({
       "taxAmount": taxAmount,
       "time": Timestamp.fromDate(selectedDate),
       "dateString": dateStr
@@ -2100,7 +2115,7 @@ class _EntryScreenState extends State<EntryScreen> {
                     ]),
                     const SizedBox(height: 8),
                     StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance.collection('stocks').orderBy('name').snapshots(),
+                      stream: getCollection('stocks').orderBy('name').snapshots(),
                       builder: (context, snapshot) {
                         List<String> stocks = [];
                         if (snapshot.hasData) stocks = snapshot.data!.docs.map((doc) => doc['name'] as String).toList();
@@ -2163,7 +2178,7 @@ class _EntryScreenState extends State<EntryScreen> {
                     // Tax Entry Form
                     label("NET TAX VALUE FOR DAY (₹)"),
                     StreamBuilder<DocumentSnapshot>(
-                      stream: FirebaseFirestore.instance.collection('daily_taxes').doc(DateFormat('yyyy-MM-dd').format(selectedDate)).snapshots(),
+                      stream: getCollection('daily_taxes').doc(DateFormat('yyyy-MM-dd').format(selectedDate)).snapshots(),
                       builder: (context, taxSnap) {
                         double savedTax = 0;
                         if (taxSnap.hasData && taxSnap.data!.exists) {
@@ -2176,7 +2191,7 @@ class _EntryScreenState extends State<EntryScreen> {
                             inputField(taxController, onChanged: () => setState(() {}), hintText: savedTax > 0 ? "Saved: ₹${savedTax.toStringAsFixed(2)}" : ""),
                             const SizedBox(height: 24),
                             StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance.collection('trades_v2')
+                              stream: getCollection('trades_v2')
                                   .where('time', isGreaterThanOrEqualTo: Timestamp.fromDate(DateTime(selectedDate.year, selectedDate.month, selectedDate.day)))
                                   .where('time', isLessThan: Timestamp.fromDate(DateTime(selectedDate.year, selectedDate.month, selectedDate.day).add(const Duration(days: 1))))
                                   .snapshots(),
@@ -2268,7 +2283,7 @@ class HistoryScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 16),
             StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('trades_v2').snapshots(),
+              stream: getCollection('trades_v2').snapshots(),
               builder: (context, snapshot) {
                 int count = snapshot.hasData ? snapshot.data!.docs.length : 0;
                 return Row(
@@ -2286,7 +2301,7 @@ class HistoryScreen extends StatelessWidget {
             const SizedBox(height: 24),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('trades_v2').orderBy('time', descending: true).snapshots(),
+                stream: getCollection('trades_v2').orderBy('time', descending: true).snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) return Center(child: Text("Error: ${snapshot.error}", style: const TextStyle(color: Colors.red)));
                   if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
@@ -2407,13 +2422,13 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
     double gross = s - b;
 
     if (tempStock != null && tempStock!.isNotEmpty) {
-       var qs = await FirebaseFirestore.instance.collection('stocks').where('name', isEqualTo: tempStock).get();
+       var qs = await getCollection('stocks').where('name', isEqualTo: tempStock).get();
        if (qs.docs.isEmpty) {
-           await FirebaseFirestore.instance.collection('stocks').add({'name': tempStock});
+           await getCollection('stocks').add({'name': tempStock});
        }
     }
 
-    await FirebaseFirestore.instance.collection('trades_v2').doc(widget.doc.id).update({
+    await getCollection('trades_v2').doc(widget.doc.id).update({
       "buy": b, "sell": s, "qty": q, "gross": gross, "time": Timestamp.fromDate(selectedDate), "stock": tempStock,
     });
 
@@ -2428,7 +2443,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
 
   Future<void> deleteTrade() async {
     _showPopup("Deleted!");
-    await FirebaseFirestore.instance.collection('trades_v2').doc(widget.doc.id).delete();
+    await getCollection('trades_v2').doc(widget.doc.id).delete();
   }
 
   Widget smallInput(String label, TextEditingController controller) {
@@ -2511,7 +2526,7 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
               const Text("STOCK", style: TextStyle(color: Colors.grey, fontSize: 8, fontWeight: FontWeight.w500, letterSpacing: -0.3)),
               const SizedBox(height: 8),
               StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('stocks').orderBy('name').snapshots(),
+                stream: getCollection('stocks').orderBy('name').snapshots(),
                 builder: (context, snapshot) {
                   List<String> stocks = [];
                   if (snapshot.hasData) stocks = snapshot.data!.docs.map((doc) => doc['name'] as String).toList();
@@ -2848,10 +2863,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('trades_v2').orderBy('time', descending: true).snapshots(),
+      stream: getCollection('trades_v2').orderBy('time', descending: true).snapshots(),
       builder: (context, snapshotTrades) {
          return StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('daily_taxes').snapshots(),
+            stream: getCollection('daily_taxes').snapshots(),
             builder: (context, snapshotTaxes) {
                 if (!snapshotTrades.hasData || !snapshotTaxes.hasData) return const Center(child: CircularProgressIndicator());
 
@@ -2944,6 +2959,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               const SizedBox(width: 16),
                               Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [Text("Settings", style: TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500)), SizedBox(height: 6), Text("Coming soon", style: TextStyle(color: Colors.white38, fontSize: 11))])
                             ],
+                          ),
+                        ),
+                        // Logout
+                        GestureDetector(
+                          onTap: () async {
+                            await FirebaseAuth.instance.signOut();
+                            // No need to manually navigate if AuthWrapper handles auth state properly,
+                            // but we are inside HomeScreen which might not rebuild correctly.
+                            // We should pushReplacement to a new AuthWrapper.
+                            if (context.mounted) {
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const AuthWrapper()), (Route<dynamic> route) => false);
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                            decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.redAccent.withOpacity(0.3), width: 0.5)),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.logout, color: Colors.redAccent, size: 22),
+                                const SizedBox(width: 16),
+                                Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [Text("Log Out", style: TextStyle(color: Colors.redAccent, fontSize: 13, fontWeight: FontWeight.w500)), SizedBox(height: 6), Text("Sign out of Spydex", style: TextStyle(color: Colors.white38, fontSize: 11))])
+                              ],
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -3047,7 +3085,7 @@ class _FundMarginScreenState extends State<FundMarginScreen> {
                   onPressed: () {
                     double? val = double.tryParse(amountController.text);
                     if (val != null && val > 0) {
-                      FirebaseFirestore.instance.collection('transactions').add({ 'amount': isCredit ? val : -val, 'time': Timestamp.fromDate(popupDate), 'type': type }).then((_) {
+                      getCollection('transactions').add({ 'amount': isCredit ? val : -val, 'time': Timestamp.fromDate(popupDate), 'type': type }).then((_) {
                         if (mounted) ScaffoldMessenger.of(this.context).showSnackBar(const SnackBar(content: Text("Transaction added successfully"), backgroundColor: Colors.green));
                       });
                       Navigator.pop(dialogContext);
@@ -3104,7 +3142,7 @@ class _FundMarginScreenState extends State<FundMarginScreen> {
                     double? val = double.tryParse(amountController.text);
                     if (val != null && val > 0) {
                       Navigator.pop(dialogContext);
-                      FirebaseFirestore.instance.collection('transactions').doc(docId).update({ 'amount': isCredit ? val : -val, 'time': Timestamp.fromDate(popupDate) }).then((_) {
+                      getCollection('transactions').doc(docId).update({ 'amount': isCredit ? val : -val, 'time': Timestamp.fromDate(popupDate) }).then((_) {
                         if (mounted) ScaffoldMessenger.of(this.context).showSnackBar(const SnackBar(content: Text("Transaction updated successfully"), backgroundColor: Colors.green));
                       });
                     }
@@ -3133,7 +3171,7 @@ class _FundMarginScreenState extends State<FundMarginScreen> {
             style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             onPressed: () {
               Navigator.pop(dialogContext);
-              FirebaseFirestore.instance.collection('transactions').doc(docId).delete().then((_) {
+              getCollection('transactions').doc(docId).delete().then((_) {
                 if (mounted) ScaffoldMessenger.of(this.context).showSnackBar(const SnackBar(content: Text("Transaction deleted successfully"), backgroundColor: Colors.green));
               });
             },
@@ -3150,13 +3188,13 @@ class _FundMarginScreenState extends State<FundMarginScreen> {
       backgroundColor: Colors.black,
       appBar: AppBar(backgroundColor: Colors.black, elevation: 0, title: const Text("Fund Margin", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500)), iconTheme: const IconThemeData(color: Colors.white)),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('trades_v2').snapshots(),
+        stream: getCollection('trades_v2').snapshots(),
         builder: (context, tradesSnapshot) {
           return StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('daily_taxes').snapshots(),
+            stream: getCollection('daily_taxes').snapshots(),
             builder: (context, taxesSnapshot) {
               return StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('transactions').snapshots(),
+                stream: getCollection('transactions').snapshots(),
                 builder: (context, transSnapshot) {
                   if (!tradesSnapshot.hasData || !transSnapshot.hasData || !taxesSnapshot.hasData) return const Center(child: CircularProgressIndicator());
 
