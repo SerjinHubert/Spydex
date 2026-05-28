@@ -13,6 +13,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io' show Platform;
 import 'dart:ui' as ui;
 import 'package:file_picker/file_picker.dart';
 import 'package:excel/excel.dart' as ex;
@@ -108,7 +110,19 @@ class SpydexApp extends StatelessWidget {
         ),
       ),
       builder: (context, child) {
-        return AdaptiveScaleWrapper(child: child!);
+        // Only use the forced 390 width scaling on iOS to fix specific iPhone DPI mismatches.
+        // For Android and Web, use native responsive Flutter layout to perfectly adapt to any screen size/ratio.
+        if (!kIsWeb && Platform.isIOS) {
+          return AdaptiveScaleWrapper(child: child!);
+        }
+        
+        // On Android, we just lock the text scaling so user accessibility settings don't break the UI
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: const TextScaler.linear(1.0),
+          ),
+          child: child!,
+        );
       },
       home: const AuthWrapper(),
     );
