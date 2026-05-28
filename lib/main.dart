@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:local_auth/local_auth.dart';
 import 'dart:io' show Platform;
 import 'dart:ui' as ui;
 import 'package:file_picker/file_picker.dart';
@@ -148,6 +149,8 @@ class _LockScreenState extends State<LockScreen> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     _loadProfileImage();
+    _fetchUserData();
+    _triggerBiometric();
     
     _shakeController = AnimationController(vsync: this, duration: const Duration(milliseconds: 400));
     _shakeAnimation = TweenSequence([
@@ -163,6 +166,38 @@ class _LockScreenState extends State<LockScreen> with SingleTickerProviderStateM
   void dispose() {
     _shakeController.dispose();
     super.dispose();
+  }
+
+  String _targetPasscode = "0000";
+
+  Future<void> _fetchUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      if (doc.exists && doc.data()!.containsKey('appPasscode')) {
+        _targetPasscode = doc.data()!['appPasscode'].toString();
+      }
+    }
+  }
+
+  Future<void> _triggerBiometric() async {
+    final LocalAuthentication auth = LocalAuthentication();
+    final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
+    final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
+
+    if (canAuthenticate) {
+      try {
+        final bool didAuthenticate = await auth.authenticate(
+          localizedReason: 'Please authenticate to unlock Spydex',
+          persistAcrossBackgrounding: true,
+        );
+        if (didAuthenticate && mounted) {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+        }
+      } catch (e) {
+        // Ignore error and fall back to passcode
+      }
+    }
   }
 
   Future<void> _loadProfileImage() async {
@@ -181,7 +216,7 @@ class _LockScreenState extends State<LockScreen> with SingleTickerProviderStateM
 
     if (enteredPasscode.length == 4) {
       Future.delayed(const Duration(milliseconds: 300), () {
-        if (enteredPasscode.join() == "0000") {
+        if (enteredPasscode.join() == _targetPasscode) {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
         } else {
           setState(() {
@@ -2808,6 +2843,77 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _loadProfileImage();
+    _fetchUserName();
+  }
+
+  String userName = "Trader";
+  String appPasscode = "0000";
+
+  Future<void> _fetchUserName() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      if (doc.exists) {
+        final data = doc.data()!;
+        final first = data['firstName'] ?? '';
+        final last = data['lastName'] ?? '';
+        setState(() {
+          if (first.isNotEmpty) {
+            userName = "$first $last".trim().toUpperCase();
+          }
+          if (data.containsKey('appPasscode')) {
+            appPasscode = data['appPasscode'].toString();
+          }
+        });
+      }
+    }
+  }
+
+  Future<void> _changePasscode() async {
+    final TextEditingController _ctrl = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          backgroundColor: const Color(0xFF161616),
+          title: const Text("Set New Passcode", style: TextStyle(color: Colors.white)),
+          content: TextField(
+            controller: _ctrl,
+            keyboardType: TextInputType.number,
+            maxLength: 4,
+            style: const TextStyle(color: Colors.white),
+            decoration: const InputDecoration(
+              hintText: "Enter 4 digit passcode",
+              hintStyle: TextStyle(color: Colors.white24),
+              counterText: "",
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text("Cancel", style: TextStyle(color: Colors.grey)),
+            ),
+            TextButton(
+              onPressed: () async {
+                if (_ctrl.text.length == 4) {
+                  final user = FirebaseAuth.instance.currentUser;
+                  if (user != null) {
+                    await FirebaseFirestore.instance.collection('users').doc(user.uid).set(
+                      {'appPasscode': _ctrl.text}, 
+                      SetOptions(merge: true)
+                    );
+                    setState(() { appPasscode = _ctrl.text; });
+                  }
+                  Navigator.pop(ctx);
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Passcode Updated!")));
+                }
+              },
+              child: const Text("Save", style: TextStyle(color: Colors.amber)),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _loadProfileImage() async {
@@ -2913,9 +3019,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                    ]
                                 ),
                                 const SizedBox(height: 24),
-                                const Text("SHAMINI HUBERT", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
+                                Text(userName, style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: -0.2)),
                                 const SizedBox(height: 6),
-                                const Text("SPYDEX Founder", style: TextStyle(color: Colors.grey, fontSize: 12)),
+                                const Text("SPYDEX Trader", style: TextStyle(color: Colors.grey, fontSize: 12)),
                                 const SizedBox(height: 36),
                                 Row(
                                    mainAxisAlignment: MainAxisAlignment.center,
@@ -2958,6 +3064,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const Icon(Icons.download, color: Colors.amber, size: 22),
                                 const SizedBox(width: 16),
                                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("Export CSV", style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500)), const SizedBox(height: 6), Text("Download all ${stats['totalTrades']} trades", style: const TextStyle(color: Colors.grey, fontSize: 11))])
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        // Change Passcode
+                        GestureDetector(
+                          onTap: _changePasscode,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                            decoration: BoxDecoration(color: const Color(0xFF161616), borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.white10, width: 0.5)),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.lock_outline, color: Colors.amber, size: 22),
+                                const SizedBox(width: 16),
+                                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("App Passcode & FaceID", style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500)), const SizedBox(height: 6), Text("Current Passcode: $appPasscode", style: const TextStyle(color: Colors.grey, fontSize: 11))])
                               ],
                             ),
                           ),

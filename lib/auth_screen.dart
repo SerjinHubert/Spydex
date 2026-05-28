@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'main.dart'; // To import LockScreen and SpydexApp (or whatever the main app widget is)
+import 'profile_setup_screen.dart'; // import ProfileCheckWrapper
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -204,7 +204,7 @@ class AuthWrapper extends StatelessWidget {
         }
         
         if (snapshot.hasData && snapshot.data != null) {
-          return const LockScreen();
+          return const ProfileCheckWrapper();
         }
         
         return const AuthScreen();
