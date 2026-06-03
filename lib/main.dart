@@ -2492,7 +2492,23 @@ class _TradeHistoryCardState extends State<TradeHistoryCard> {
 
   Future<void> deleteTrade() async {
     _showPopup("Deleted!");
+
+    Timestamp timeStamp = widget.doc['time'] as Timestamp;
+    DateTime tradeDate = timeStamp.toDate();
+    DateTime startOfDay = DateTime(tradeDate.year, tradeDate.month, tradeDate.day);
+    DateTime endOfDay = DateTime(tradeDate.year, tradeDate.month, tradeDate.day, 23, 59, 59, 999);
+
     await getCollection('trades_v2').doc(widget.doc.id).delete();
+
+    var tradesOnDay = await getCollection('trades_v2')
+        .where('time', isGreaterThanOrEqualTo: Timestamp.fromDate(startOfDay))
+        .where('time', isLessThanOrEqualTo: Timestamp.fromDate(endOfDay))
+        .get();
+
+    if (tradesOnDay.docs.isEmpty) {
+      String dateStr = DateFormat('yyyy-MM-dd').format(tradeDate);
+      await getCollection('daily_taxes').doc(dateStr).delete();
+    }
   }
 
   Widget smallInput(String label, TextEditingController controller) {
